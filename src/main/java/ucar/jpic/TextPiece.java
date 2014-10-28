@@ -12,6 +12,12 @@ public class TextPiece extends Element
   String filename;
   int lineno;
 
-  public TextPiece() {}
+  public TextPiece()
+  {
+    this.text = null;
+    this.filename = null;
+    this.lineno = -1;
+    this.adj = new Adjustment(CENTER_ADJUST,NONE_ADJUST);
+  }
 }
 

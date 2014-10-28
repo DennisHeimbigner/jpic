@@ -17,7 +17,11 @@ public class FileInput extends Input
   String line;
   int ptr;
 
-  public FileInput(OutputStream fp, String s) {}
+  public FileInput(OutputStream fp, String filename)
+  {
+    this.fp = fp;
+    this.filename = filename;
+  }
 
   int get() {return 0;}
   int peek() {return 0;}

@@ -13,6 +13,13 @@ public class TextItem extends Element
   String filename;
   int lineno;
 
-    public TextItem(String s0, String s1, int i) {}
+  public TextItem(String t, String fn, int ln)
+  {
+    next = 0;
+    text = t;
+    filename = fn;
+    lineno = ln;
+    adj = new Adjustment(CENTER_ADJUST,NONE_ADJUST);
+  }
 }
 

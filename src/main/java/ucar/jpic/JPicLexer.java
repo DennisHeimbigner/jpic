@@ -140,7 +140,7 @@ public class JPicLexer implements JPicParserBody.Lexer
     {
 	public int lineno = 0;
 	public int charno = 0;
-    public Pos(int lineno, int charno) {this.lineno=lineno; this.charno=charno;}
+        public Pos(int lineno, int charno) {this.lineno=lineno; this.charno=charno;}
 	public void clear() {this.lineno = 0; this.charno = 0;}
     }
 
@@ -298,7 +298,7 @@ public class JPicLexer implements JPicParserBody.Lexer
                 }
                 // pushback the delimiter
                 if(c != EOS) text.backup();
-                try {// See if this looks like an integer
+		try {// See if this looks like an integer
                     long num = Long.parseLong(yytext.toString());
                     token = JPicParser.Lexer.NUMBER;
                 } catch (NumberFormatException nfe) {
@@ -389,5 +389,27 @@ public class JPicLexer implements JPicParserBody.Lexer
 	return text.toPos(text.next);	
     }
 
+    protected
+    macro_collect()
+	throw Exception
+    {
+	//Get the name
+	int token = yylex();
+	if(token != NAME)
+	    throw new Exception("Macro has no name");
+	String name = getLval();
+	int depth = 0;	
+	List<Macro.MacroToken> body = new ArrayList<>();
+	do {
+	    token = yylex();
+	    if(token == EOS)
+	        throw new Exception("Macro has unbalanced '{}'");
+	    Object lval = getLval();
+	    Macro.MacroToken = new Macro.MacroToken(token,lval);
+	    if(token == '{') depth++;
+	    else if(token == '}') depth--;
+	} while(depth > 0);
+	Macro.macros.put(name,new Macro(name,body);
+    }
 
 }

@@ -9,10 +9,23 @@ import java.util.List;
 
 public class Macro extends Element
 {
-    String name;
-    String body;
+    static public class MacroToken
+    {
+        public int token;
+	public Object lval;
+        public MacroToken(int token, Object lval)
+        {
+	    this.token = token;
+	    this.lval = lval;
+        }
+    }
 
-    public Macro(String name, String body)
+    static public Map<String,Macro> macros = new HashMap<>();
+
+    String name;	
+    List<Object> body;
+
+    public Macro(String name, List<Object> body)
     {
 	this.name = name;
 	this.body = body;

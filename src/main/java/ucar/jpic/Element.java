@@ -197,6 +197,7 @@ class Element
     }
 
     static public class Corner extends Position {}
+    static public class Distance extends Position {}
 
     static public class LineInfo
     {
