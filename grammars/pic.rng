@@ -1,0 +1,121 @@
+<!-- Relax NG Grammar -->
+
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+
+<start>
+  <element name="picture">
+    <ref name="picture"/>
+  </element>
+</start>
+
+<define name="picture">
+  <zeroOrMore>
+    <ref name="element"/>
+  </zeroOrMore>
+</define>
+
+<define name="statement">
+  <choice>
+    <ref name="assignment"/>
+    <ref name="direction"/>
+    <ref name="print"/>
+    <ref name="forloop"/>
+    <ref name="conditional"/>
+    <ref name="compound"/>
+    <ref name="block"/>
+    <ref name="reset_variables"/>
+    <ref name="reset"/>
+    <ref name="direction"/>
+    <ref name="print"/>
+  </choice>
+</define>
+
+
+<define name="assignment">
+  <element name="set">
+    <ref name="expr"/>
+  </element>
+</define>
+
+<define name="direction">
+  <choice>
+    <element name="up"/>
+    <element name="down"/>
+    <element name="left"/>
+    <element name="right"/>
+  </choice>
+</define>
+
+<define name="expr">
+</define>
+
+<define name="element">
+  <choice>
+    <ref name="shape"/>
+    <ref name="statement"/>
+  </choice>
+<define>
+
+<define name="block">
+  <element name="block">
+    <oneOrMore>
+      <ref name="element"/>
+    </oneOrMore>
+  </element>
+</define>
+
+<define name="shape">
+  <choice>
+    <ref name="box"/>
+    <ref name="circle"/>
+    <ref name="ellipse"/>
+    <ref name="arc"/>
+    <ref name="line"/>
+    <ref name="arrow"/>
+    <ref name="move"/>
+    <ref name="spline"/>
+    <ref name="text/>
+    <ref name="compound"/>
+  </choice>
+</define>
+
+<define name="property">
+  <zeroOrMore>
+    <attribute name="height"/>
+    <attribute name="radius"/>
+    <attribute name="width"/>
+    <attribute name="diameter"/>
+    <attribute name="from">/
+    <attribute name="at"/>
+    <attribute name="with"/>
+    <attribute name="solid"/>
+    <attribute name="dotted"/>
+    <attribute name="dashed"/>
+    <attribute name="fill"/>
+    <attribute name="shaded"/>
+    <attribute name="colored"/>
+    <attribute name="outlined"/>
+    <attribute name="chop"/>
+    <attribute name="same"/>
+    <attribute name="invisible"/>
+    <attribute name="arrow-head">
+      <choice>
+        <value>left</value>
+        <value>right</value>
+        <value>both</value>
+      </choice>
+    </attribute>
+  </zeroOrMore>
+</define>
+
+
+
+
+
+
+<define name="">
+</define>
+<define name="">
+</define>
+<define name="">
+</define>

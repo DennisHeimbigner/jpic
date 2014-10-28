@@ -1,0 +1,970 @@
+/* Copyright (C) 1989, 1990, 1991, 1992, 2000, 2001, 2002, 2003, 2004, 2005,
+                 2006, 2007, 2009
+   Free Software Foundation, Inc.
+     Written by James Clark (jjc@jclark.com)
+
+This file is part of groff.
+
+groff is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free
+Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+groff is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+*/
+
+%require "3.0" /* or later */
+%language "Java"
+%debug
+%error-verbose
+%locations
+
+%define api.push-pull pull
+%define api.position.type {JPic.Position}
+%define package {ucar.jpic}
+%define abstract
+%define parser_class_name {JPicParserBody}
+%define extends {JPicActions}
+%define throws {Exception}
+%define lex_throws {Exception}
+
+%code imports {
+}
+
+/*
+%union {
+	String str;
+	int n;
+	double x;
+	struct { double x, y; } pair;
+	struct { double x; String body; } if_data;
+	struct { String str; const String filename; int lineno; } lstr;
+	struct { double *v; int nv; int maxv; } dv;
+	struct { double val; int is_multiplicative; } by;
+	place pl;
+	object *obj;
+	corner crn;
+	path *pth;
+	object_spec *spec;
+	saved_state *pstate;
+	graphics_state state;
+	object_type obtype;
+}
+*/
+
+/* These hava a value */
+%token <String> LABEL
+%token <String> VARIABLE
+%token <Number> NUMBER
+%token <String> STRING
+
+/* These do not have a value */
+%token <ObjectType> DELIMITED
+%token <ObjectType> TH
+%token <ObjectType> LEFT_ARROW_HEAD
+%token <ObjectType> RIGHT_ARROW_HEAD
+%token <ObjectType> DOUBLE_ARROW_HEAD
+
+/* Shapes */
+%token <ShapeType> TEXT
+%token <ShapeType> BOX
+%token <ShapeType> CIRCLE
+%token <ShapeType> ELLIPSE
+%token <ShapeType> ARC
+%token <ShapeType> LINE
+%token <ShapeType> ARROW
+
+/* Other */
+%token <ObjectType> MOVE
+%token <ObjectType> SPLINE
+%token <ObjectType> HEIGHT
+%token <ObjectType> RADIUS
+%token <ObjectType> FIGNAME
+%token <ObjectType> WIDTH
+%token <ObjectType> DIAMETER
+%token <ObjectType> UP
+%token <ObjectType> DOWN
+%token <ObjectType> RIGHT
+%token <ObjectType> LEFT
+%token <ObjectType> FROM
+%token <ObjectType> TO
+%token <ObjectType> AT
+%token <ObjectType> WITH
+%token <ObjectType> BY
+%token <ObjectType> THEN
+%token <ObjectType> SOLID
+%token <ObjectType> DOTTED
+%token <ObjectType> DASHED
+%token <ObjectType> CHOP
+%token <ObjectType> SAME
+%token <ObjectType> INVISIBLE
+%token <ObjectType> LJUST
+%token <ObjectType> RJUST
+%token <ObjectType> ABOVE
+%token <ObjectType> BELOW
+%token <ObjectType> OF
+%token <ObjectType> THE
+%token <ObjectType> WAY
+%token <ObjectType> BETWEEN
+%token <ObjectType> AND
+%token <ObjectType> HERE
+%token <ObjectType> DOT_N
+%token <ObjectType> DOT_E	
+%token <ObjectType> DOT_W
+%token <ObjectType> DOT_S
+%token <ObjectType> DOT_NE
+%token <ObjectType> DOT_SE
+%token <ObjectType> DOT_NW
+%token <ObjectType> DOT_SW
+%token <ObjectType> DOT_C
+%token <ObjectType> DOT_START
+%token <ObjectType> DOT_END
+%token <ObjectType> DOT_X
+%token <ObjectType> DOT_Y
+%token <ObjectType> DOT_HT
+%token <ObjectType> DOT_WID
+%token <ObjectType> DOT_RAD
+%token <ObjectType> SIN
+%token <ObjectType> COS
+%token <ObjectType> ATAN2
+%token <ObjectType> LOG
+%token <ObjectType> EXP
+%token <ObjectType> SQRT
+%token <ObjectType> K_MAX
+%token <ObjectType> K_MIN
+%token <ObjectType> INT
+%token <ObjectType> RAND
+%token <ObjectType> SRAND
+%token <ObjectType> COPY
+%token <ObjectType> THRU
+%token <ObjectType> TOP
+%token <ObjectType> BOTTOM
+%token <ObjectType> UPPER
+%token <ObjectType> LOWER
+%token <ObjectType> SH
+%token <ObjectType> PRINT
+%token <ObjectType> CW
+%token <ObjectType> CCW
+%token <ObjectType> FOR
+%token <ObjectType> DO
+%token <ObjectType> IF
+%token <ObjectType> ELSE
+%token <ObjectType> LEFT_CORNER
+%token <ObjectType> RIGHT_CORNER
+%token <ObjectType> NORTH
+%token <ObjectType> SOUTH
+%token <ObjectType> EAST
+%token <ObjectType> WEST
+%token <ObjectType> CENTER
+%token <ObjectType> END
+%token <ObjectType> START
+%token <ObjectType> RESET
+%token <ObjectType> UNTIL
+%token <ObjectType> PLOT
+%token <ObjectType> THICKNESS
+%token <ObjectType> FILL
+%token <ObjectType> SPRINTF
+%token <ObjectType> COMMAND
+
+%token <ObjectType> DEFINE
+%token <ObjectType> UNDEF
+
+%token <Property> COLORED
+%token <Property> OUTLINED
+%token <Property> SHADED
+%token <Property> XSLANTED
+%token <Property> YSLANTED
+%token <Property> ALIGNED
+
+/* Multi-character operators */
+%token <Operator> ANDAND OROR
+%token <Operator> NOTEQUAL EQUALEQUAL
+%token <Operator> LESSEQUAL GREATEREQUAL
+
+%type <Number> expr expr_lower_than expr_not_lower_than any_expr text_expr
+%type <Pair> expr_pair position_not_place /* <Pair> */
+%type <Corner> corner
+%type <Path> path label_path relative_path
+%type <Place> place label element
+%type <ShapeSpec> shape_spec block compound
+%type <Pair> position /* <Pair> */
+%type <String> macro_name /* <String> */
+%type <String> text print_args print_arg /* <Lstr> */
+%type <Property> property;
+%type <Direction> direction
+%type <Statement> statement conditional forloop print assignment var_define
+%type <Macro> macro_define
+%type <ShapeType> shape
+
+%type <Boolean> optional_by /* <BY> */ 
+
+%type <StringList> variable_list
+%type <PropertyList> properties_list
+%type <StatementList> statement_list
+%type <PlaceList> element_list
+
+%expect 2
+
+%left '.'
+
+/* this ensures that plot 17 "%g" parses as (plot 17 "%g") */
+%left PLOT
+%left STRING SPRINTF
+
+/* give text adjustments higher precedence than STRING, so that
+box "foo" above ljust == box ("foo" above ljust)
+*/
+
+%left LJUST RJUST ABOVE BELOW
+
+%left LEFT RIGHT
+/* Give attributes that take an optional expression a higher
+precedence than left and right, so that eg `line chop left'
+parses properly. */
+%left CHOP SOLID DASHED DOTTED UP DOWN FILL COLORED OUTLINED
+%left XSLANTED YSLANTED
+%left LABEL
+
+%left VARIABLE NUMBER '(' SIN COS ATAN2 LOG EXP SQRT K_MAX K_MIN INT RAND SRAND LAST 
+%left HERE '`'
+
+%left BOX CIRCLE ELLIPSE ARC LINE ARROW SPLINE '['
+
+/* these need to be lower than '-' */
+%left HEIGHT RADIUS WIDTH DIAMETER FROM TO AT THICKNESS
+
+/* these must have higher precedence than CHOP so that `label %prec CHOP'
+works */
+%left DOT_N DOT_E DOT_W DOT_S DOT_NE DOT_SE DOT_NW DOT_SW DOT_C
+%left DOT_START DOT_END TOP BOTTOM LEFT_CORNER RIGHT_CORNER
+%left UPPER LOWER NORTH SOUTH EAST WEST CENTER START END
+
+%left ','
+%left OROR
+%left ANDAND
+%left EQUALEQUAL NOTEQUAL
+%left '<' '>' LESSEQUAL GREATEREQUAL
+
+%left BETWEEN OF
+%left AND
+
+%left '+' '-'
+%left '*' '/' '%'
+%right '!'
+%right '^'
+
+%start picture
+
+%%
+
+picture:
+	  %empty
+	    {picture(null);}
+	| element_list
+		{picture($1);}
+	;
+
+element_list:
+	  element
+		{$$=element_list(null,$1);}
+	| element_list ';' element
+		{$$=element_list($1,$3);}
+	;
+
+statement_list:
+	  statement
+		{$$=statement_list(null,$1);}
+	| statement_list ';' statement
+		{$$=statement_list($1,$3);}
+	;
+
+statement:
+	 ';' {$$=null;}
+	| macro_define ';' {$$=$1;}
+	| var_define ';' {$$=$1;}
+	| assignment ';' {$$=$1;}
+	| direction ';' {$$=$1;}
+	| forloop ';' {$$=$1;}
+	| conditional ';' {$$=$1;}
+        | print ';' {$$=$1;}
+	;
+
+macro_define:
+	FIGNAME '=' macro_name
+		{$$=macro_define($3);}
+	;
+
+var_define:
+	VARIABLE '=' any_expr
+		{var_define($1,$3);}
+	;
+
+assignment:
+	VARIABLE ':' '=' any_expr
+		{$$=assignment($1,$4);}
+
+direction:
+	  UP { $$=current_direction(UP_DIRECTION); }
+	| DOWN { $$=current_direction(DOWN_DIRECTION); }
+	| LEFT { $$=current_direction(LEFT_DIRECTION); }
+	| RIGHT { $$=current_direction(RIGHT_DIRECTION); }
+	;
+
+print:
+	PRINT print_args
+		{$$=print($2);}
+	;
+
+forloop:
+	FOR VARIABLE '=' expr TO expr optional_by DO block
+		{$$=forloop($2,$4,$6,$7,$9);}
+
+optional_by:
+	  %empty
+		{$$=null;}
+	| BY expr
+		{$$=by_plus($2);}
+	| BY '*' expr
+		{$$=by_times($3);}
+	;
+
+conditional:
+	  IF expr block
+		{$$=conditional($2,$3,null);}
+	| IF expr block ELSE block
+		{$$=conditional($2,$3,$5);}
+
+macro_name:
+  	  VARIABLE
+	| LABEL
+	;
+
+variable_list:
+	  %empty
+		{$$=variable_list();}
+	| variable_list VARIABLE
+		{$$=variable_list($1,$2);}
+	| variable_list ',' VARIABLE
+		{$$=variable_list($1,$3);}
+	;
+
+print_args:
+	  print_arg
+		{$$ = print_args(null,$1);}
+	| print_args print_arg
+		{$$ = print_args($1,$2);}
+	;
+
+print_arg:
+	  expr %prec ','
+		{$$=$1;}
+	| text
+		{$$=$1;}
+	| position %prec ','
+		{$$=$1;}
+	;
+
+any_expr:
+	  expr
+		{ $$ = $1; }
+	| text_expr
+		{ $$ = $1; }
+	;
+	
+text_expr:
+	  text '=' '=' text
+		{$$=text_expr(Operator.EQ,$1,$4);}
+	| text '!' '=' text
+		{$$=text_expr(Operator.NEQ,$1,$4);}
+	| text_expr ANDAND text_expr
+		{$$=text_expr(Operator.AND,$1,$3);}
+	| text_expr ANDAND expr
+		{$$=text_expr(Operator.AND,$1,$3);}
+	| expr ANDAND text_expr
+		{$$=text_expr(Operator.AND,$1,$3);}
+	| text_expr OROR text_expr
+		{$$=text_expr(Operator.OR,$1,$3);}
+	| text_expr OROR expr
+		{$$=text_expr(Operator.OR,$1,$3);}
+	| expr OROR text_expr
+		{$$=text_expr(Operator.OR,$1,$3);}
+	| '!' text_expr
+		{$$=text_expr(Operator.NOT,$2);}
+	;
+
+element:
+	shape_spec
+		{$$=element($1);}
+	| LABEL ':'  element
+		{$$=label($1,$3);}
+	| LABEL ':'  position_not_place
+		{$$=label($1,$3);}
+	| LABEL ':'  place
+		{$$=label($1,$3);}
+	| statement
+		{$$=$1;}
+
+block:
+	'{' element_list '}'
+		{$$=block($2);}
+	;
+
+compound:
+	  '[' element_list ']'
+		{$$=compound($2);}
+
+shape_spec:
+	shape properties_list
+	    {$$=shape_spec($1,$2);}
+	| compound
+	    {$$ = $1;}
+	;
+
+shape:
+	  BOX
+		{ $$ = ShapeType.BOX; }
+	| CIRCLE
+		{ $$ = ShapeType.CIRCLE; }
+	| ELLIPSE
+		{ $$ = ShapeType.ELLIPSE; }
+	| ARC
+		{$$ = ShapeType.ARC; }
+	| LINE
+		{$$ = ShapeType.LINE; }
+	| ARROW
+		{$$ = ShapeType.ARROW; }
+	| MOVE
+		{$$ = ShapeType.MOVE; }
+	| SPLINE
+		{$$ = ShapeType.SPLINE; }
+	| TEXT
+		{$$ = ShapeType.TEXT; }
+	;
+
+properties_list:
+	  %empty
+	    {$$=properties_list(null);}
+	| properties_list property
+	    {$$=properties_list($1,$2);}
+	;
+
+property:
+	  HEIGHT expr
+		{$$=property(Property.HEIGHT,$2);}
+	| RADIUS expr
+		{$$=property(Property.RADIUS,$2;}
+	| WIDTH expr
+		{$$=property(Property.WIDTH,$2);}
+	| DIAMETER expr
+		{$$=property(Property.DIAMETER,$2);}
+	| shape_spec expr %prec HEIGHT
+		{$$=property(Property.EXPR,$2);}
+	| FROM position
+		{$$=property(Property.FROM,$2);}
+	| TO position
+		{$$=property(Property.TO,$2);}
+	| AT position
+		{$$=property(Property.AT,$2);}
+	| WITH path
+		{$$=property(Property.WITH,$2);}
+	| WITH position %prec ','
+		{$$=property(Property.WITH,$2);}
+	| BY expr_pair
+		{$$=property(Property.BY,$2);}
+	| THEN
+		{$$=property(Property.THEN,null);}
+	| SOLID
+		{$$=property(Property.SOLID,null);}
+	| DOTTED
+		{$$=property(Property.DOTTED,null);}
+	| DOTTED expr
+		{$$=property(Property.DOTTED,$2);}
+	| DASHED
+		{$$=property(Property.DASHED,null);}
+	| DASHED expr
+		{$$=property(Property.DASHED,$2);}
+	| FILL
+		{$$=property(Property.FILL,null);}
+	| FILL expr
+		{$$=property(Property.FILL,$2);}
+	| XSLANTED expr
+		{$$=property(Property.XSLANTED,$2);}
+	| YSLANTED expr
+		{$$=property(Property.YSLANTED,$2);}
+	| SHADED text
+		{$$=property(Property.SHADED,$2);}
+	| COLORED text
+		{$$=property(Property.COLORED,$2);}
+	| OUTLINED text
+		{$$=property(Property.OUTLINED,$2);}
+	| CHOP
+		{$$=property(Property.CHOP,null);}
+	| CHOP expr
+		{$$=property(Property.CHOP,$2);}
+	| SAME
+		{$$=property(Property.SAME,null);}
+	| INVISIBLE
+		{$$=property(Property.INVISIBLE,null);}
+	| LEFT_ARROW_HEAD
+		{$$=property(Property.LEFT_ARROW_HEAD,null);}
+	| RIGHT_ARROW_HEAD
+		{$$=property(Property.RIGHT_ARROW_HEAD,null);}
+	| DOUBLE_ARROW_HEAD
+		{$$=property(Property.DOUBLE_ARROW_HEAD,null);}
+	| CW
+		{$$=property(Property.CW,null);}
+	| CCW
+		{$$=property(Property.CCW,null);}
+	| LJUST
+		{$$=property(Property.LJUST,null);}
+	| RJUST
+		{$$=property(Property.RJUST,null);}
+	| ABOVE
+		{$$=property(Property.ABOVE,null);}
+	| BELOW
+		{$$=property(Property.BELOW,null);}
+	| THICKNESS expr
+		{$$=property(Property.THICKNESS,$2);}
+	| ALIGNED
+		{$$=property(Property.ALIGNED,null);}
+	| text %prec STRING
+		{$$=property(Property.TEXT,$1);}
+	;
+
+text:
+	STRING
+		{ $$ = $1; }
+	;
+
+position:
+  	position_not_place
+		{ $$ = $1; }
+	| place
+  		{
+		  position pos = $1;
+		  $$.x = pos.x;
+		  $$.y = pos.y;
+		}
+	| '(' place ')'
+		{
+		  position pos = $2;
+		  $$.x = pos.x;
+		  $$.y = pos.y;
+		}
+	;
+
+position_not_place:
+	expr_pair
+		{ $$ = $1; }
+	| position '+' expr_pair
+		{
+		  $$.x = $1.x + $3.x;
+		  $$.y = $1.y + $3.y;
+		}
+	| '(' position '+' expr_pair ')'
+		{
+		  $$.x = $2.x + $4.x;
+		  $$.y = $2.y + $4.y;
+		}
+	| position '-' expr_pair
+		{
+		  $$.x = $1.x - $3.x;
+		  $$.y = $1.y - $3.y;
+		}
+	| '(' position '-' expr_pair ')'
+		{
+		  $$.x = $2.x - $4.x;
+		  $$.y = $2.y - $4.y;
+		}
+	| '(' position ',' position ')'
+		{
+		  $$.x = $2.x;
+		  $$.y = $4.y;
+		}
+	| expr between position AND position
+		{
+		  $$.x = (1.0 - $1)*$3.x + $1*$5.x;
+		  $$.y = (1.0 - $1)*$3.y + $1*$5.y;
+		}
+	| '(' expr between position AND position ')'
+		{
+		  $$.x = (1.0 - $2)*$4.x + $2*$6.x;
+		  $$.y = (1.0 - $2)*$4.y + $2*$6.y;
+		}
+	/* the next two rules cause harmless shift/reduce warnings */
+	| expr_not_lower_than '<' position ',' position '>'
+		{
+		  $$.x = (1.0 - $1)*$3.x + $1*$5.x;
+		  $$.y = (1.0 - $1)*$3.y + $1*$5.y;
+		}
+	| '(' expr_not_lower_than '<' position ',' position '>' ')'
+		{
+		  $$.x = (1.0 - $2)*$4.x + $2*$6.x;
+		  $$.y = (1.0 - $2)*$4.y + $2*$6.y;
+		}
+	;
+
+between:
+	BETWEEN
+	| OF THE WAY BETWEEN
+	;
+
+expr_pair:
+	expr ',' expr
+		{
+		  $$.x = $1;
+		  $$.y = $3;
+		}
+	| '(' expr_pair ')'
+		{ $$ = $2; }
+	;
+
+place:
+	/* line at A left == line (at A) left */
+	label %prec CHOP
+		{ $$ = $1; }
+	| label corner
+		{
+		  path pth($2);
+		  if (!pth.follow($1, & $$))
+		    YYABORT;
+		}
+	| corner label
+		{
+		  path pth($1);
+		  if (!pth.follow($2, & $$))
+		    YYABORT;
+		}
+	| corner OF label
+		{
+		  path pth($1);
+		  if (!pth.follow($3, & $$))
+		    YYABORT;
+		}
+	| HERE
+		{
+		  $$.x = current_position.x;
+		  $$.y = current_position.y;
+		  $$.obj = 0;
+		}
+	;
+
+label:
+	LABEL
+		{
+		  place *p = lookup_label($1);
+		  if (!p) {
+		    lex_error("there is no place `%1'", $1);
+		    YYABORT;
+		  }
+		  $$ = *p;
+		  a_delete($1);
+		}
+	| label '.' LABEL
+		{
+		  path pth($3);
+		  if (!pth.follow($1, & $$))
+		    YYABORT;
+		}
+	;
+
+label_path:
+ 	'.' LABEL
+		{ $$ = new path($2);}
+	| label_path '.' LABEL
+		{
+		  $$ = $1;
+		  $$->append($3);
+		}
+	;
+
+relative_path:
+	corner %prec CHOP
+		{ $$ = new path($1);}
+	/* give this a lower precedence than LEFT and RIGHT so that
+	   [A: box] with .A left == [A: box] with (.A left) */
+  	| label_path %prec TEXT
+		{ $$ = $1; }
+	| label_path corner
+		{
+		  $$ = $1;
+		  $$->append($2);
+		}
+	;
+
+path:
+	relative_path
+		{ $$ = $1; }
+	| '(' relative_path ',' relative_path ')'
+		{
+		  $$ = $2;
+		  $$->set_ypath($4);
+		}
+	;
+
+corner:
+	  DOT_N
+		{ $$ = &object::north; }
+	| DOT_E	
+		{ $$ = &object::east; }
+	| DOT_W
+		{ $$ = &object::west; }
+	| DOT_S
+		{ $$ = &object::south; }
+	| DOT_NE
+		{ $$ = &object::north_east; }
+	| DOT_SE
+		{ $$ = &object:: south_east; }
+	| DOT_NW
+		{ $$ = &object::north_west; }
+	| DOT_SW
+		{ $$ = &object::south_west; }
+	| DOT_C
+		{ $$ = &object::center; }
+	| DOT_START
+		{ $$ = &object::start; }
+	| DOT_END
+		{ $$ = &object::end; }
+  	| TOP
+		{ $$ = &object::north; }
+	| BOTTOM
+		{ $$ = &object::south; }
+	| LEFT
+		{ $$ = &object::west; }
+	| RIGHT
+		{ $$ = &object::east; }
+	| UPPER LEFT
+		{ $$ = &object::north_west; }
+	| LOWER LEFT
+		{ $$ = &object::south_west; }
+	| UPPER RIGHT
+		{ $$ = &object::north_east; }
+	| LOWER RIGHT
+		{ $$ = &object::south_east; }
+	| LEFT_CORNER
+		{ $$ = &object::west; }
+	| RIGHT_CORNER
+		{ $$ = &object::east; }
+	| UPPER LEFT_CORNER
+		{ $$ = &object::north_west; }
+	| LOWER LEFT_CORNER
+		{ $$ = &object::south_west; }
+	| UPPER RIGHT_CORNER
+		{ $$ = &object::north_east; }
+	| LOWER RIGHT_CORNER
+		{ $$ = &object::south_east; }
+	| NORTH
+		{ $$ = &object::north; }
+	| SOUTH
+		{ $$ = &object::south; }
+	| EAST
+		{ $$ = &object::east; }
+	| WEST
+		{ $$ = &object::west; }
+	| CENTER
+		{ $$ = &object::center; }
+	| START
+		{ $$ = &object::start; }
+	| END
+		{ $$ = &object::end; }
+	;
+
+expr:
+	expr_lower_than
+		{ $$ = $1; }
+	| expr_not_lower_than
+		{ $$ = $1; }
+	;
+
+expr_lower_than:
+	'(' expr '<' expr ')'
+		{ $$ = ($2 < $4);}
+	;
+
+expr_not_lower_than:
+	VARIABLE
+		{
+		  if (!lookup_variable($1, & $$)) {
+		    lex_error("there is no variable `%1'", $1);
+		    YYABORT;
+		  }
+		  a_delete $1;
+		}
+	| NUMBER
+		{ $$ = $1; }
+	| place DOT_X
+  		{
+		  if ($1.obj != 0)
+		    $$ = $1.obj->origin().x;
+		  else
+		    $$ = $1.x;
+		}			
+	| place DOT_Y
+		{
+		  if ($1.obj != 0)
+		    $$ = $1.obj->origin().y;
+		  else
+		    $$ = $1.y;
+		}
+	| place DOT_HT
+		{
+		  if ($1.obj != 0)
+		    $$ = $1.obj->height();
+		  else
+		    $$ = 0.0;
+		}
+	| place DOT_WID
+		{
+		  if ($1.obj != 0)
+		    $$ = $1.obj->width();
+		  else
+		    $$ = 0.0;
+		}
+	| place DOT_RAD
+		{
+		  if ($1.obj != 0)
+		    $$ = $1.obj->radius();
+		  else
+		    $$ = 0.0;
+		}
+	| expr '+' expr
+		{ $$ = $1 + $3; }
+	| expr '-' expr
+		{ $$ = $1 - $3; }
+	| expr '*' expr
+		{ $$ = $1 * $3; }
+	| expr '/' expr
+		{
+		  if ($3 == 0.0) {
+		    lex_error("division by zero");
+		    YYABORT;
+		  }
+		  $$ = $1/$3;
+		}
+	| expr '%' expr
+		{
+		  if ($3 == 0.0) {
+		    lex_error("modulus by zero");
+		    YYABORT;
+		  }
+		  $$ = fmod($1, $3);
+		}
+	| expr '^' expr
+		{
+		  errno = 0;
+		  $$ = pow($1, $3);
+		  if (errno == EDOM) {
+		    lex_error("arguments to `^' operator out of domain");
+		    YYABORT;
+		  }
+		  if (errno == ERANGE) {
+		    lex_error("result of `^' operator out of range");
+		    YYABORT;
+		  }
+		}
+	| '-' expr %prec '!'
+		{ $$ = -$2; }
+	| '(' any_expr ')'
+		{ $$ = $2; }
+	| SIN '(' any_expr ')'
+		{
+		  errno = 0;
+		  $$ = sin($3);
+		  if (errno == ERANGE) {
+		    lex_error("sin result out of range");
+		    YYABORT;
+		  }
+		}
+	| COS '(' any_expr ')'
+		{
+		  errno = 0;
+		  $$ = cos($3);
+		  if (errno == ERANGE) {
+		    lex_error("cos result out of range");
+		    YYABORT;
+		  }
+		}
+	| ATAN2 '(' any_expr ',' any_expr ')'
+		{
+		  errno = 0;
+		  $$ = atan2($3, $5);
+		  if (errno == EDOM) {
+		    lex_error("atan2 argument out of domain");
+		    YYABORT;
+		  }
+		  if (errno == ERANGE) {
+		    lex_error("atan2 result out of range");
+		    YYABORT;
+		  }
+		}
+	| LOG '(' any_expr ')'
+		{
+		  errno = 0;
+		  $$ = log10($3);
+		  if (errno == ERANGE) {
+		    lex_error("log result out of range");
+		    YYABORT;
+		  }
+		}
+	| EXP '(' any_expr ')'
+		{
+		  errno = 0;
+		  $$ = pow(10.0, $3);
+		  if (errno == ERANGE) {
+		    lex_error("exp result out of range");
+		    YYABORT;
+		  }
+		}
+	| SQRT '(' any_expr ')'
+		{
+		  errno = 0;
+		  $$ = sqrt($3);
+		  if (errno == EDOM) {
+		    lex_error("sqrt argument out of domain");
+		    YYABORT;
+		  }
+		}
+	| K_MAX '(' any_expr ',' any_expr ')'
+		{ $$ = $3 > $5 ? $3 : $5; }
+	| K_MIN '(' any_expr ',' any_expr ')'
+		{ $$ = $3 < $5 ? $3 : $5; }
+	| INT '(' any_expr ')'
+		{ $$ = $3 < 0 ? -floor(-$3) : floor($3);}
+	| RAND '(' any_expr ')'
+		{ $$ = 1.0 + floor(((rand()&0x7fff)/double(0x7fff))*$3);}
+	| RAND '(' ')'
+		{
+		  /* return a random number in the range [0,1) */
+		  /* portable, but not very random */
+		  $$ = (rand() & 0x7fff) / double(0x8000);
+		}
+	| SRAND '(' any_expr ')'
+		{
+		  $$ = 0;
+		  srand((unsigned int)$3);
+		}
+	| expr LESSEQUAL expr
+		{ $$ = ($1 <= $3);}
+	| expr '>' expr
+		{ $$ = ($1 > $3);}
+	| expr GREATEREQUAL expr
+		{ $$ = ($1 >= $3);}
+	| expr EQUALEQUAL expr
+		{ $$ = ($1 == $3);}
+	| expr NOTEQUAL expr
+		{ $$ = ($1 != $3);}
+	| expr ANDAND expr
+		{ $$ = ($1 != 0.0 && $3 != 0.0);}
+	| expr OROR expr
+		{ $$ = ($1 != 0.0 || $3 != 0.0);}
+	| '!' expr
+		{ $$ = ($2 == 0.0);}
+
+	;
