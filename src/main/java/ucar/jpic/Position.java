@@ -25,7 +25,7 @@ public class Position extends Element
 	return this;
   }
 
-  public Position minus(Position p)
+  public Position subtract(Position p)
   {
 	this.x -= p.x;
 	this.y -= p.y;
@@ -56,7 +56,7 @@ public class Position extends Element
 	return new Position(p1.x+p2.x,p1.y+p2.y);
   }
 
-  public Position minus(Position p)
+  public Position subtract(Position p)
   {
 	return new Position(p1.x-p2.x,p1.y-p2.y);
   }

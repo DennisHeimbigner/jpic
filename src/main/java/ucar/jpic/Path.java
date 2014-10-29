@@ -51,32 +51,29 @@ public class Path extends Element
     public Place follow(Place pl);
 	throws Exception
     {
-	Place result = new Place();
+	Place result;
 	if(is_position)
 	    return new Place(pos.x,pos,y,null);
 
 	for(String l: label_list) {
-	    if(p.obj == null || (p = p.obj.find_label(lb.str)) == 0) {
-      lex_error("object does not contain a place `%1'", lb.str);
-      return 0;
-    }
-  if(crn == 0 || p.obj == 0)
-    *result = *p;
-  else {
-    position ps = ((p.obj).*(crn))();
-    result.x = ps.x;
-    result.y = ps.y;
-    result.obj = 0;
-  }
-  if(ypath) {
-    place tem;
-    if(!ypath.follow(pl, &tem))
-      return 0;
-    result.y = tem.y;
-    if(result.obj != tem.obj)
-      result.obj = 0;
-  }
-  return 1;
-
+	    if(p.obj == null || (p = p.obj.find_label(l)) == 0)
+		throw new Exception(String.format("object does not contain a place `%s'", l);
+	}
+	if(corner == null || p.obj == null)
+	    result = p;
+        else {
+	    Position ps = new Position((p.obj).*(crn))());
+	    result = new Place(ps.x,ps.y,null);
+	}
+        if(ypath != null) {
+	    Place temp;
+	    temp = ypath.follow(pl);
+	    if(temp == null)
+	      return null;
+	    result.y = temp.y;
+	    if(result.obj != tem.obj)
+	      result.obj = null;
+	}
+	return result;
     }
 }
