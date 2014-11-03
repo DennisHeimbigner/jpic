@@ -1,4 +1,0 @@
-jpic
-====
-
-Factory floor

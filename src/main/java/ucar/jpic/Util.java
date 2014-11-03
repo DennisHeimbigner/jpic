@@ -5,10 +5,36 @@ described in the file LICENSE.txt.
 
 package ucar.jpic;
 
-import static ucar.jpic.Element.*;
-
-abstract public class Util
+abstract public class Util implements Types
 {
+
+    /**
+     * Read the contents of a file.
+     *
+     * @param filename file to read, '-' => stdin.
+     * @return The contents of the file as a string
+     * @throws IOException
+     */
+
+    static String
+    readfile(String filename)
+        throws IOException
+    {
+        InputStream input = null;
+        if(filename == null)
+            input = System.in;
+        else
+            input = new FileInputStream(filename);
+        InputStreamReader rdr = new InputStreamReader(input, UTF8);
+
+        int c = 0;
+        StringBuilder buf = new StringBuilder();
+        while((c = rdr.read()) >= 0) {
+            buf.append((char) c);
+        }
+        input.close();
+        return buf.toString();
+    }
 
     static Shape make_object(ShapeSpec spec, Position pos, Direction dir)
     {
@@ -46,5 +72,8 @@ abstract public class Util
     static void do_copy(String file)
     {
     }
+
+
+
 
 }

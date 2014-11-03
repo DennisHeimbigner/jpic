@@ -7,8 +7,9 @@ package ucar.jpic;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.util.*;
 
-public class JPic
+public class JPic implements Types
 {
     //////////////////////////////////////////////////
     // Constants
@@ -17,10 +18,153 @@ public class JPic
 
     static final Charset UTF8 = Charset.forName("UTF-8");
 
-    //////////////////////////////////////////////////
-    // Static Variables
+    // Mnemonic
+    static final boolean LOCALONLY = true;
 
-    static boolean testing = false;
+    //////////////////////////////////////////////////
+    // State of the Execution: Macros and Variable scopes
+
+    static {
+        scope = new ArrayList<VariableList>();
+        pushScope(); // initial scope
+    }
+
+    //////////
+    // Manage all created objects
+
+    static List<Element> oblist = new ArrayList<>();
+
+    static Element
+    create(ShapeType kind)
+    {
+	Element e = null;
+	switch (kind) {
+	case BOX: e = new BoxShape(); break;
+	case CIRCLE: e = new CircleShape(); break;
+	case ELLIPSE: e = new EllipseShape(); break;
+	case ARC: e = new ArcShape(); break;
+	case SPLINE: e = new SplineShape(); break;
+	case LINE: e = new LineShape(); break;
+	case ARROW: e = new ArrowShape(); break;
+	case TEXTBOX: e = new TextShape(); break;
+	case BLOCK: e = new BlockShape(); break;
+	case MARK:
+        case OTHER:
+	default:
+	    assert false;
+	}
+	if(e != null)
+	    oblist.add(e);
+	return e;
+    }
+
+    //////////
+    // Define Macros
+    static public class MacroToken
+    {
+        public int token;
+        public Object lval;
+
+        public MacroToken(int token, Object lval)
+        {
+            this.token = token;
+            this.lval = lval;
+        }
+    }
+
+    static public Map<String, Macro> macros = new HashMap<>();
+
+    static public String expand(Macro macro, List<String> args)
+    {
+        return null;
+    }
+
+    //////////
+    // Scoped Variables
+
+    static List<VariableList> scope;
+
+    static void pushScope()
+    {
+        scope.add(0, new VariableList());
+    }
+
+    static void popScope()
+    {
+        scope.remove(0);
+    }
+
+    static Object
+    getValue(String vname)
+        throws JPicException
+    {
+        Variable v = lookup(vname);
+        if(v == null)
+            throw new Exception("Variable not defined: " + vname);
+        return v.value;
+    }
+
+
+    static Variable
+    lookup(String vname, boolean localonly)
+    {
+        int count = (localonly ? 1 : scope.size());
+        for(int i = 0;i < count;i++) {
+            VariableList current = scope.get(i);
+            for(Variable v : current) {
+                if(v.name.equals(vname))
+                    return v;
+            }
+        }
+        return null;
+    }
+
+    static Variable
+    lookup(String vname)
+    {
+        return lookup(vname, !LOCALONLY);
+    }
+
+    static void defVar(Variable v)
+    {
+        Variable v2 = lookup(v.name, LOCALONLY);
+        if(v2 == null) {
+            VariableList top = scope.get(0);
+            top.add(v);
+        } else
+            v2.value = v.value;
+    }
+
+    static Variable
+    undef(String vname, boolean localonly)
+    {
+        int count = (localonly ? 1 : scope.size());
+        for(int i = 0;i < count;i++) {
+            VariableList current = scope.get(i);
+            for(Variable v : current) {
+                if(v.name.equals(vname)) {
+                    current.remove(v);
+                    return v;
+                }
+            }
+        }
+        return null;
+    }
+
+    static void assign(String vname, Object value)
+    {
+        Variable v = lookup(vname);
+        if(v == null) {
+            v = new Variable(vname, value);
+            defVar(v);
+        } else
+            v.value = value;
+    }
+
+    //////////////////////////////////////////////////
+    // Misc. Static Variables
+
+    static boolean testing = false; // ps
 
     //////////////////////////////////////////////////
     // Instance variables
@@ -36,6 +180,7 @@ public class JPic
     boolean compatible_flag;
     boolean safer_flag;
     String graphname;
+    ElementList picture;
 
     //////////////////////////////////////////////////
     // Constructor(s)
@@ -45,10 +190,14 @@ public class JPic
         this.filename = filename;
     }
 
-    void run()
-        throws IOException
+    public void generate()
+        throws JPicException
     {
         this.picfile = readfile(this.filename);
+        JPicParser parser = new JPicParser();
+        if(!parser.parse(picfile))
+            throw new Exception("Parse Failed");
+        this.picture = parser.getPicture();
     }
 
     //////////////////////////////////////////////////
@@ -76,41 +225,13 @@ public class JPic
         else System.exit(0);
     }
 
-    /**
-     * Read the contents of a file.
-     *
-     * @param filename file to read, '-' => stdin.
-     * @return The contents of the file as a string
-     * @throws IOException
-     */
-
-    static String
-    readfile(String filename)
-        throws IOException
-    {
-        InputStream input = null;
-        if(filename == null)
-            input = System.in;
-        else
-            input = new FileInputStream(filename);
-        InputStreamReader rdr = new InputStreamReader(input, UTF8);
-
-        int c = 0;
-        StringBuilder buf = new StringBuilder();
-        while((c = rdr.read()) >= 0) {
-            buf.append((char) c);
-        }
-        input.close();
-        return buf.toString();
-    }
-
 
     //////////////////////////////////////////////////
     // Main
     //////////////////////////////////////////////////
 
     /**
-     * z     * Initialize and start the JPic program
+     * Initialize and start the JPic program
      *
      * @param argv the argv from the static main
      */
@@ -162,8 +283,8 @@ public class JPic
         // Create the interpreter
         JPic jpic = new JPic(input);
         try {
-            jpic.run();
-        } catch (IOException ioe) {
+            jpic.generate();
+        } catch (Exception ioe) {
             System.err.println("IO Error: " + ioe);
         }
     }

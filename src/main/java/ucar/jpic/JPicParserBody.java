@@ -39,10 +39,9 @@ package ucar.jpic;
 /* "%code imports" blocks.  */
 /* "jpic.y":38  */ /* lalr1.java:93  */
 
-import static ucar.jpic.Element.*;
 import static ucar.jpic.JPicParserBody.Lexer.*;
 
-/* "JPicParserBody.java":46  */ /* lalr1.java:93  */
+/* "JPicParserBody.java":45  */ /* lalr1.java:93  */
 
 /**
  * A Bison parser, automatically generated from <tt>jpic.y</tt>.
@@ -390,7 +389,7 @@ abstract class JPicParserBody extends JPicActions
      * and beginning/ending positions of the token.
      * @return the token identifier corresponding to the next token.
      */
-    int yylex () throws Exception;
+    int yylex () throws JPicException;
 
     /**
      * Entry point for error reporting.  Emits an error
@@ -603,7 +602,7 @@ abstract class JPicParserBody extends JPicActions
     return yyerrstatus_ == 0;
   }
 
-  private int yyaction (int yyn, YYStack yystack, int yylen) throws Exception
+  private int yyaction (int yyn, YYStack yystack, int yylen) throws JPicException
   {
     Object yyval;
     Location yyloc = yylloc (yystack, yylen);
@@ -625,1280 +624,1280 @@ abstract class JPicParserBody extends JPicActions
       {
           case 2:
   if (yyn == 2)
-    /* "jpic.y":228  */ /* lalr1.java:476  */
+    /* "jpic.y":227  */ /* lalr1.java:476  */
     {picture(null);};
   break;
     
 
   case 3:
   if (yyn == 3)
-    /* "jpic.y":230  */ /* lalr1.java:476  */
+    /* "jpic.y":229  */ /* lalr1.java:476  */
     {picture(((ElementList)(yystack.valueAt (1-(1)))));};
   break;
     
 
   case 4:
   if (yyn == 4)
-    /* "jpic.y":235  */ /* lalr1.java:476  */
+    /* "jpic.y":234  */ /* lalr1.java:476  */
     {yyval=((ShapeSpec)(yystack.valueAt (1-(1))));};
   break;
     
 
   case 5:
   if (yyn == 5)
-    /* "jpic.y":237  */ /* lalr1.java:476  */
+    /* "jpic.y":236  */ /* lalr1.java:476  */
     {yyval=((Element)(yystack.valueAt (1-(1))));};
   break;
     
 
   case 6:
   if (yyn == 6)
-    /* "jpic.y":239  */ /* lalr1.java:476  */
+    /* "jpic.y":238  */ /* lalr1.java:476  */
     {setlabel(((Element)(yystack.valueAt (3-(3)))),((String)(yystack.valueAt (3-(1))))); yyval=((String)(yystack.valueAt (3-(1))));};
   break;
     
 
   case 7:
   if (yyn == 7)
-    /* "jpic.y":241  */ /* lalr1.java:476  */
+    /* "jpic.y":240  */ /* lalr1.java:476  */
     {setlabel(((Pair)(yystack.valueAt (3-(3)))),((String)(yystack.valueAt (3-(1))))); yyval=((String)(yystack.valueAt (3-(1))));};
   break;
     
 
   case 8:
   if (yyn == 8)
-    /* "jpic.y":243  */ /* lalr1.java:476  */
+    /* "jpic.y":242  */ /* lalr1.java:476  */
     {setlabel(((Place)(yystack.valueAt (3-(3)))),((String)(yystack.valueAt (3-(1))))); yyval=((String)(yystack.valueAt (3-(1))));};
   break;
     
 
   case 9:
   if (yyn == 9)
-    /* "jpic.y":248  */ /* lalr1.java:476  */
+    /* "jpic.y":247  */ /* lalr1.java:476  */
     {yyval=element_list(null,((Element)(yystack.valueAt (1-(1)))));};
   break;
     
 
   case 10:
   if (yyn == 10)
-    /* "jpic.y":250  */ /* lalr1.java:476  */
+    /* "jpic.y":249  */ /* lalr1.java:476  */
     {yyval=element_list(((ElementList)(yystack.valueAt (3-(1)))),((Element)(yystack.valueAt (3-(3)))));};
   break;
     
 
   case 11:
   if (yyn == 11)
-    /* "jpic.y":254  */ /* lalr1.java:476  */
+    /* "jpic.y":253  */ /* lalr1.java:476  */
     {yyval=null;};
   break;
     
 
   case 12:
   if (yyn == 12)
-    /* "jpic.y":255  */ /* lalr1.java:476  */
+    /* "jpic.y":254  */ /* lalr1.java:476  */
     {yyval=null;};
   break;
     
 
   case 13:
   if (yyn == 13)
-    /* "jpic.y":256  */ /* lalr1.java:476  */
+    /* "jpic.y":255  */ /* lalr1.java:476  */
     {yyval=((Element)(yystack.valueAt (1-(1))));};
   break;
     
 
   case 14:
   if (yyn == 14)
-    /* "jpic.y":257  */ /* lalr1.java:476  */
+    /* "jpic.y":256  */ /* lalr1.java:476  */
     {yyval=((Direction)(yystack.valueAt (1-(1))));};
   break;
     
 
   case 15:
   if (yyn == 15)
-    /* "jpic.y":258  */ /* lalr1.java:476  */
+    /* "jpic.y":257  */ /* lalr1.java:476  */
     {yyval=((Element)(yystack.valueAt (1-(1))));};
   break;
     
 
   case 16:
   if (yyn == 16)
-    /* "jpic.y":259  */ /* lalr1.java:476  */
+    /* "jpic.y":258  */ /* lalr1.java:476  */
     {yyval=((Element)(yystack.valueAt (1-(1))));};
   break;
     
 
   case 17:
   if (yyn == 17)
-    /* "jpic.y":260  */ /* lalr1.java:476  */
+    /* "jpic.y":259  */ /* lalr1.java:476  */
     {yyval=((Element)(yystack.valueAt (1-(1))));};
   break;
     
 
   case 18:
   if (yyn == 18)
-    /* "jpic.y":261  */ /* lalr1.java:476  */
+    /* "jpic.y":260  */ /* lalr1.java:476  */
     {yyval=((Element)(yystack.valueAt (1-(1))));};
   break;
     
 
   case 19:
   if (yyn == 19)
-    /* "jpic.y":271  */ /* lalr1.java:476  */
+    /* "jpic.y":270  */ /* lalr1.java:476  */
     {macro_define();};
   break;
     
 
   case 20:
   if (yyn == 20)
-    /* "jpic.y":276  */ /* lalr1.java:476  */
+    /* "jpic.y":275  */ /* lalr1.java:476  */
     {yyval=undef(((String)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 21:
   if (yyn == 21)
-    /* "jpic.y":281  */ /* lalr1.java:476  */
+    /* "jpic.y":280  */ /* lalr1.java:476  */
     {yyval=move(((PropertyList)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 22:
   if (yyn == 22)
-    /* "jpic.y":286  */ /* lalr1.java:476  */
+    /* "jpic.y":285  */ /* lalr1.java:476  */
     {yyval=assignment(((String)(yystack.valueAt (3-(1)))),((Expr)(yystack.valueAt (3-(3)))));};
   break;
     
 
   case 23:
   if (yyn == 23)
-    /* "jpic.y":290  */ /* lalr1.java:476  */
+    /* "jpic.y":289  */ /* lalr1.java:476  */
     {yyval=current_direction(UP);};
   break;
     
 
   case 24:
   if (yyn == 24)
-    /* "jpic.y":291  */ /* lalr1.java:476  */
+    /* "jpic.y":290  */ /* lalr1.java:476  */
     {yyval=current_direction(DOWN);};
   break;
     
 
   case 25:
   if (yyn == 25)
-    /* "jpic.y":292  */ /* lalr1.java:476  */
+    /* "jpic.y":291  */ /* lalr1.java:476  */
     {yyval=current_direction(LEFT);};
   break;
     
 
   case 26:
   if (yyn == 26)
-    /* "jpic.y":293  */ /* lalr1.java:476  */
+    /* "jpic.y":292  */ /* lalr1.java:476  */
     {yyval=current_direction(RIGHT);};
   break;
     
 
   case 27:
   if (yyn == 27)
-    /* "jpic.y":298  */ /* lalr1.java:476  */
+    /* "jpic.y":297  */ /* lalr1.java:476  */
     {yyval=forloop(((String)(yystack.valueAt (9-(2)))),((Expr)(yystack.valueAt (9-(4)))),((Expr)(yystack.valueAt (9-(6)))),((ByExpr)(yystack.valueAt (9-(7)))),((ElementList)(yystack.valueAt (9-(9)))));};
   break;
     
 
   case 28:
   if (yyn == 28)
-    /* "jpic.y":302  */ /* lalr1.java:476  */
+    /* "jpic.y":301  */ /* lalr1.java:476  */
     {yyval=null;};
   break;
     
 
   case 29:
   if (yyn == 29)
-    /* "jpic.y":304  */ /* lalr1.java:476  */
+    /* "jpic.y":303  */ /* lalr1.java:476  */
     {yyval=by('\0',((Expr)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 30:
   if (yyn == 30)
-    /* "jpic.y":306  */ /* lalr1.java:476  */
+    /* "jpic.y":305  */ /* lalr1.java:476  */
     {yyval=by('*',((Expr)(yystack.valueAt (3-(3)))));};
   break;
     
 
   case 31:
   if (yyn == 31)
-    /* "jpic.y":311  */ /* lalr1.java:476  */
+    /* "jpic.y":310  */ /* lalr1.java:476  */
     {yyval=conditional(((Expr)(yystack.valueAt (3-(2)))),((ElementList)(yystack.valueAt (3-(3)))),null);};
   break;
     
 
   case 32:
   if (yyn == 32)
-    /* "jpic.y":313  */ /* lalr1.java:476  */
+    /* "jpic.y":312  */ /* lalr1.java:476  */
     {yyval=conditional(((Expr)(yystack.valueAt (5-(2)))),((ElementList)(yystack.valueAt (5-(3)))),((ElementList)(yystack.valueAt (5-(5)))));};
   break;
     
 
   case 33:
   if (yyn == 33)
-    /* "jpic.y":317  */ /* lalr1.java:476  */
+    /* "jpic.y":316  */ /* lalr1.java:476  */
     {yyval=((ElementList)(yystack.valueAt (3-(2))));};
   break;
     
 
   case 34:
   if (yyn == 34)
-    /* "jpic.y":322  */ /* lalr1.java:476  */
+    /* "jpic.y":321  */ /* lalr1.java:476  */
     {yyval=compound(((ElementList)(yystack.valueAt (3-(2)))));};
   break;
     
 
   case 35:
   if (yyn == 35)
-    /* "jpic.y":326  */ /* lalr1.java:476  */
+    /* "jpic.y":325  */ /* lalr1.java:476  */
     {yyval=shape_spec(((ShapeType)(yystack.valueAt (2-(1)))),((PropertyList)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 36:
   if (yyn == 36)
-    /* "jpic.y":328  */ /* lalr1.java:476  */
+    /* "jpic.y":327  */ /* lalr1.java:476  */
     {yyval = ((ElementList)(yystack.valueAt (1-(1))));};
   break;
     
 
   case 37:
   if (yyn == 37)
-    /* "jpic.y":333  */ /* lalr1.java:476  */
+    /* "jpic.y":332  */ /* lalr1.java:476  */
     {yyval = ShapeType.BOX;};
   break;
     
 
   case 38:
   if (yyn == 38)
-    /* "jpic.y":335  */ /* lalr1.java:476  */
+    /* "jpic.y":334  */ /* lalr1.java:476  */
     {yyval = ShapeType.CIRCLE;};
   break;
     
 
   case 39:
   if (yyn == 39)
-    /* "jpic.y":337  */ /* lalr1.java:476  */
+    /* "jpic.y":336  */ /* lalr1.java:476  */
     {yyval = ShapeType.ELLIPSE;};
   break;
     
 
   case 40:
   if (yyn == 40)
-    /* "jpic.y":339  */ /* lalr1.java:476  */
+    /* "jpic.y":338  */ /* lalr1.java:476  */
     {yyval = ShapeType.ARC;};
   break;
     
 
   case 41:
   if (yyn == 41)
-    /* "jpic.y":341  */ /* lalr1.java:476  */
+    /* "jpic.y":340  */ /* lalr1.java:476  */
     {yyval = ShapeType.LINE;};
   break;
     
 
   case 42:
   if (yyn == 42)
-    /* "jpic.y":343  */ /* lalr1.java:476  */
+    /* "jpic.y":342  */ /* lalr1.java:476  */
     {yyval = ShapeType.ARROW;};
   break;
     
 
   case 43:
   if (yyn == 43)
-    /* "jpic.y":345  */ /* lalr1.java:476  */
+    /* "jpic.y":344  */ /* lalr1.java:476  */
     {yyval = ShapeType.SPLINE;};
   break;
     
 
   case 44:
   if (yyn == 44)
-    /* "jpic.y":347  */ /* lalr1.java:476  */
+    /* "jpic.y":346  */ /* lalr1.java:476  */
     {yyval = ShapeType.TEXTBOX;};
   break;
     
 
   case 45:
   if (yyn == 45)
-    /* "jpic.y":352  */ /* lalr1.java:476  */
+    /* "jpic.y":351  */ /* lalr1.java:476  */
     {yyval=properties_list(null,null);};
   break;
     
 
   case 46:
   if (yyn == 46)
-    /* "jpic.y":354  */ /* lalr1.java:476  */
+    /* "jpic.y":353  */ /* lalr1.java:476  */
     {yyval=properties_list(((PropertyList)(yystack.valueAt (2-(1)))),((Property)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 47:
   if (yyn == 47)
-    /* "jpic.y":359  */ /* lalr1.java:476  */
+    /* "jpic.y":358  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.HEIGHT,((Expr)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 48:
   if (yyn == 48)
-    /* "jpic.y":361  */ /* lalr1.java:476  */
+    /* "jpic.y":360  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.RADIUS,((Expr)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 49:
   if (yyn == 49)
-    /* "jpic.y":363  */ /* lalr1.java:476  */
+    /* "jpic.y":362  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.WIDTH,((Expr)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 50:
   if (yyn == 50)
-    /* "jpic.y":365  */ /* lalr1.java:476  */
+    /* "jpic.y":364  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.DIAMETER,((Expr)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 51:
   if (yyn == 51)
-    /* "jpic.y":367  */ /* lalr1.java:476  */
+    /* "jpic.y":366  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.FROM,((Position)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 52:
   if (yyn == 52)
-    /* "jpic.y":369  */ /* lalr1.java:476  */
+    /* "jpic.y":368  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.TO,((Position)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 53:
   if (yyn == 53)
-    /* "jpic.y":371  */ /* lalr1.java:476  */
+    /* "jpic.y":370  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.AT,((Position)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 54:
   if (yyn == 54)
-    /* "jpic.y":373  */ /* lalr1.java:476  */
+    /* "jpic.y":372  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.WITH,((Path)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 55:
   if (yyn == 55)
-    /* "jpic.y":375  */ /* lalr1.java:476  */
+    /* "jpic.y":374  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.WITH,((Position)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 56:
   if (yyn == 56)
-    /* "jpic.y":377  */ /* lalr1.java:476  */
+    /* "jpic.y":376  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.BY,((Pair)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 57:
   if (yyn == 57)
-    /* "jpic.y":379  */ /* lalr1.java:476  */
+    /* "jpic.y":378  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.THEN,null);};
   break;
     
 
   case 58:
   if (yyn == 58)
-    /* "jpic.y":381  */ /* lalr1.java:476  */
+    /* "jpic.y":380  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.SOLID,null);};
   break;
     
 
   case 59:
   if (yyn == 59)
-    /* "jpic.y":383  */ /* lalr1.java:476  */
+    /* "jpic.y":382  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.DOTTED,null);};
   break;
     
 
   case 60:
   if (yyn == 60)
-    /* "jpic.y":385  */ /* lalr1.java:476  */
+    /* "jpic.y":384  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.DOTTED,((Expr)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 61:
   if (yyn == 61)
-    /* "jpic.y":387  */ /* lalr1.java:476  */
+    /* "jpic.y":386  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.DASHED,null);};
   break;
     
 
   case 62:
   if (yyn == 62)
-    /* "jpic.y":389  */ /* lalr1.java:476  */
+    /* "jpic.y":388  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.DASHED,((Expr)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 63:
   if (yyn == 63)
-    /* "jpic.y":391  */ /* lalr1.java:476  */
+    /* "jpic.y":390  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.FILL,null);};
   break;
     
 
   case 64:
   if (yyn == 64)
-    /* "jpic.y":393  */ /* lalr1.java:476  */
+    /* "jpic.y":392  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.FILL,((Expr)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 65:
   if (yyn == 65)
-    /* "jpic.y":395  */ /* lalr1.java:476  */
+    /* "jpic.y":394  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.XSLANTED,((Expr)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 66:
   if (yyn == 66)
-    /* "jpic.y":397  */ /* lalr1.java:476  */
+    /* "jpic.y":396  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.YSLANTED,((Expr)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 67:
   if (yyn == 67)
-    /* "jpic.y":399  */ /* lalr1.java:476  */
+    /* "jpic.y":398  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.SHADED,((String)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 68:
   if (yyn == 68)
-    /* "jpic.y":401  */ /* lalr1.java:476  */
+    /* "jpic.y":400  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.COLORED,((String)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 69:
   if (yyn == 69)
-    /* "jpic.y":403  */ /* lalr1.java:476  */
+    /* "jpic.y":402  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.OUTLINED,((String)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 70:
   if (yyn == 70)
-    /* "jpic.y":405  */ /* lalr1.java:476  */
+    /* "jpic.y":404  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.CHOP,null);};
   break;
     
 
   case 71:
   if (yyn == 71)
-    /* "jpic.y":407  */ /* lalr1.java:476  */
+    /* "jpic.y":406  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.CHOP,((Expr)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 72:
   if (yyn == 72)
-    /* "jpic.y":409  */ /* lalr1.java:476  */
+    /* "jpic.y":408  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.SAME,null);};
   break;
     
 
   case 73:
   if (yyn == 73)
-    /* "jpic.y":411  */ /* lalr1.java:476  */
+    /* "jpic.y":410  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.INVISIBLE,null);};
   break;
     
 
   case 74:
   if (yyn == 74)
-    /* "jpic.y":413  */ /* lalr1.java:476  */
+    /* "jpic.y":412  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.LEFT_ARROW_HEAD,null);};
   break;
     
 
   case 75:
   if (yyn == 75)
-    /* "jpic.y":415  */ /* lalr1.java:476  */
+    /* "jpic.y":414  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.RIGHT_ARROW_HEAD,null);};
   break;
     
 
   case 76:
   if (yyn == 76)
-    /* "jpic.y":417  */ /* lalr1.java:476  */
+    /* "jpic.y":416  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.DOUBLE_ARROW_HEAD,null);};
   break;
     
 
   case 77:
   if (yyn == 77)
-    /* "jpic.y":419  */ /* lalr1.java:476  */
+    /* "jpic.y":418  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.CW,null);};
   break;
     
 
   case 78:
   if (yyn == 78)
-    /* "jpic.y":421  */ /* lalr1.java:476  */
+    /* "jpic.y":420  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.CCW,null);};
   break;
     
 
   case 79:
   if (yyn == 79)
-    /* "jpic.y":423  */ /* lalr1.java:476  */
+    /* "jpic.y":422  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.LJUST,null);};
   break;
     
 
   case 80:
   if (yyn == 80)
-    /* "jpic.y":425  */ /* lalr1.java:476  */
+    /* "jpic.y":424  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.RJUST,null);};
   break;
     
 
   case 81:
   if (yyn == 81)
-    /* "jpic.y":427  */ /* lalr1.java:476  */
+    /* "jpic.y":426  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.ABOVE,null);};
   break;
     
 
   case 82:
   if (yyn == 82)
-    /* "jpic.y":429  */ /* lalr1.java:476  */
+    /* "jpic.y":428  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.BELOW,null);};
   break;
     
 
   case 83:
   if (yyn == 83)
-    /* "jpic.y":431  */ /* lalr1.java:476  */
+    /* "jpic.y":430  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.THICKNESS,((Expr)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 84:
   if (yyn == 84)
-    /* "jpic.y":433  */ /* lalr1.java:476  */
+    /* "jpic.y":432  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.ALIGNED,null);};
   break;
     
 
   case 85:
   if (yyn == 85)
-    /* "jpic.y":435  */ /* lalr1.java:476  */
+    /* "jpic.y":434  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.TEXT,((String)(yystack.valueAt (1-(1)))));};
   break;
     
 
   case 86:
   if (yyn == 86)
-    /* "jpic.y":437  */ /* lalr1.java:476  */
+    /* "jpic.y":436  */ /* lalr1.java:476  */
     {yyval=property(PropertyType.EXPR,((Expr)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 87:
   if (yyn == 87)
-    /* "jpic.y":442  */ /* lalr1.java:476  */
+    /* "jpic.y":441  */ /* lalr1.java:476  */
     {yyval=((Pair)(yystack.valueAt (1-(1))));};
   break;
     
 
   case 88:
   if (yyn == 88)
-    /* "jpic.y":444  */ /* lalr1.java:476  */
+    /* "jpic.y":443  */ /* lalr1.java:476  */
     {yyval=((Place)(yystack.valueAt (1-(1))));};
   break;
     
 
   case 89:
   if (yyn == 89)
-    /* "jpic.y":446  */ /* lalr1.java:476  */
+    /* "jpic.y":445  */ /* lalr1.java:476  */
     {yyval=((Place)(yystack.valueAt (3-(2))));};
   break;
     
 
   case 90:
   if (yyn == 90)
-    /* "jpic.y":451  */ /* lalr1.java:476  */
+    /* "jpic.y":450  */ /* lalr1.java:476  */
     {yyval = ((Pair)(yystack.valueAt (1-(1))));};
   break;
     
 
   case 91:
   if (yyn == 91)
-    /* "jpic.y":453  */ /* lalr1.java:476  */
+    /* "jpic.y":452  */ /* lalr1.java:476  */
     {yyval=position_expr(((Position)(yystack.valueAt (3-(1)))),((Pair)(yystack.valueAt (3-(3)))),'+');};
   break;
     
 
   case 92:
   if (yyn == 92)
-    /* "jpic.y":455  */ /* lalr1.java:476  */
+    /* "jpic.y":454  */ /* lalr1.java:476  */
     {yyval = position_expr(((Position)(yystack.valueAt (5-(2)))),((Pair)(yystack.valueAt (5-(4)))),'+');};
   break;
     
 
   case 93:
   if (yyn == 93)
-    /* "jpic.y":457  */ /* lalr1.java:476  */
+    /* "jpic.y":456  */ /* lalr1.java:476  */
     {yyval = position_expr(((Position)(yystack.valueAt (3-(1)))),((Pair)(yystack.valueAt (3-(3)))),'-');};
   break;
     
 
   case 94:
   if (yyn == 94)
-    /* "jpic.y":459  */ /* lalr1.java:476  */
+    /* "jpic.y":458  */ /* lalr1.java:476  */
     {yyval = position_expr(((Position)(yystack.valueAt (5-(2)))),((Pair)(yystack.valueAt (5-(4)))),'-');};
   break;
     
 
   case 95:
   if (yyn == 95)
-    /* "jpic.y":461  */ /* lalr1.java:476  */
+    /* "jpic.y":460  */ /* lalr1.java:476  */
     {yyval=pair(((Position)(yystack.valueAt (5-(2)))),((Position)(yystack.valueAt (5-(4)))));};
   break;
     
 
   case 96:
   if (yyn == 96)
-    /* "jpic.y":463  */ /* lalr1.java:476  */
+    /* "jpic.y":462  */ /* lalr1.java:476  */
     {yyval=between(((Expr)(yystack.valueAt (6-(1)))),((Position)(yystack.valueAt (6-(3)))),((Position)(yystack.valueAt (6-(5)))));};
   break;
     
 
   case 97:
   if (yyn == 97)
-    /* "jpic.y":465  */ /* lalr1.java:476  */
+    /* "jpic.y":464  */ /* lalr1.java:476  */
     {yyval=between(((Expr)(yystack.valueAt (8-(2)))),((Position)(yystack.valueAt (8-(4)))),((Position)(yystack.valueAt (8-(6)))));};
   break;
     
 
   case 98:
   if (yyn == 98)
-    /* "jpic.y":470  */ /* lalr1.java:476  */
+    /* "jpic.y":469  */ /* lalr1.java:476  */
     {yyval=expr_pair(((Expr)(yystack.valueAt (3-(1)))),((Expr)(yystack.valueAt (3-(3)))));};
   break;
     
 
   case 99:
   if (yyn == 99)
-    /* "jpic.y":472  */ /* lalr1.java:476  */
+    /* "jpic.y":471  */ /* lalr1.java:476  */
     {yyval = ((Pair)(yystack.valueAt (3-(2))));};
   break;
     
 
   case 100:
   if (yyn == 100)
-    /* "jpic.y":478  */ /* lalr1.java:476  */
+    /* "jpic.y":477  */ /* lalr1.java:476  */
     {yyval = place(((PathList)(yystack.valueAt (1-(1)))),null);};
   break;
     
 
   case 101:
   if (yyn == 101)
-    /* "jpic.y":480  */ /* lalr1.java:476  */
+    /* "jpic.y":479  */ /* lalr1.java:476  */
     {yyval=place(((PathList)(yystack.valueAt (3-(1)))),((Corner)(yystack.valueAt (3-(3)))));};
   break;
     
 
   case 102:
   if (yyn == 102)
-    /* "jpic.y":482  */ /* lalr1.java:476  */
+    /* "jpic.y":481  */ /* lalr1.java:476  */
     {yyval=here();};
   break;
     
 
   case 103:
   if (yyn == 103)
-    /* "jpic.y":484  */ /* lalr1.java:476  */
+    /* "jpic.y":483  */ /* lalr1.java:476  */
     {yyval=last();};
   break;
     
 
   case 104:
   if (yyn == 104)
-    /* "jpic.y":489  */ /* lalr1.java:476  */
+    /* "jpic.y":488  */ /* lalr1.java:476  */
     {yyval=label_path(((String)(yystack.valueAt (1-(1)))),null);};
   break;
     
 
   case 105:
   if (yyn == 105)
-    /* "jpic.y":491  */ /* lalr1.java:476  */
+    /* "jpic.y":490  */ /* lalr1.java:476  */
     {yyval=label_path(((String)(yystack.valueAt (3-(3)))),((PathList)(yystack.valueAt (3-(1)))));};
   break;
     
 
   case 106:
   if (yyn == 106)
-    /* "jpic.y":496  */ /* lalr1.java:476  */
+    /* "jpic.y":495  */ /* lalr1.java:476  */
     {yyval = relative_path(((Corner)(yystack.valueAt (2-(2)))),null);};
   break;
     
 
   case 107:
   if (yyn == 107)
-    /* "jpic.y":500  */ /* lalr1.java:476  */
+    /* "jpic.y":499  */ /* lalr1.java:476  */
     {yyval = relative_path(null,((PathList)(yystack.valueAt (2-(2)))));};
   break;
     
 
   case 108:
   if (yyn == 108)
-    /* "jpic.y":502  */ /* lalr1.java:476  */
+    /* "jpic.y":501  */ /* lalr1.java:476  */
     {yyval=relative_path(((Corner)(yystack.valueAt (4-(4)))),((PathList)(yystack.valueAt (4-(2)))));};
   break;
     
 
   case 109:
   if (yyn == 109)
-    /* "jpic.y":507  */ /* lalr1.java:476  */
+    /* "jpic.y":506  */ /* lalr1.java:476  */
     {yyval = ((Path)(yystack.valueAt (1-(1))));};
   break;
     
 
   case 110:
   if (yyn == 110)
-    /* "jpic.y":509  */ /* lalr1.java:476  */
+    /* "jpic.y":508  */ /* lalr1.java:476  */
     {yyval=pathpair(((Path)(yystack.valueAt (5-(2)))),((Path)(yystack.valueAt (5-(4)))));};
   break;
     
 
   case 111:
   if (yyn == 111)
-    /* "jpic.y":514  */ /* lalr1.java:476  */
+    /* "jpic.y":513  */ /* lalr1.java:476  */
     {yyval = CornerType.NORTH;};
   break;
     
 
   case 112:
   if (yyn == 112)
-    /* "jpic.y":516  */ /* lalr1.java:476  */
+    /* "jpic.y":515  */ /* lalr1.java:476  */
     {yyval = CornerType.EAST;};
   break;
     
 
   case 113:
   if (yyn == 113)
-    /* "jpic.y":518  */ /* lalr1.java:476  */
+    /* "jpic.y":517  */ /* lalr1.java:476  */
     {yyval = CornerType.WEST;};
   break;
     
 
   case 114:
   if (yyn == 114)
-    /* "jpic.y":520  */ /* lalr1.java:476  */
+    /* "jpic.y":519  */ /* lalr1.java:476  */
     {yyval = CornerType.SOUTH;};
   break;
     
 
   case 115:
   if (yyn == 115)
-    /* "jpic.y":522  */ /* lalr1.java:476  */
+    /* "jpic.y":521  */ /* lalr1.java:476  */
     {yyval = CornerType.NORTH_EAST;};
   break;
     
 
   case 116:
   if (yyn == 116)
-    /* "jpic.y":524  */ /* lalr1.java:476  */
+    /* "jpic.y":523  */ /* lalr1.java:476  */
     {yyval = CornerType. SOUTH_EAST;};
   break;
     
 
   case 117:
   if (yyn == 117)
-    /* "jpic.y":526  */ /* lalr1.java:476  */
+    /* "jpic.y":525  */ /* lalr1.java:476  */
     {yyval = CornerType.NORTH_WEST;};
   break;
     
 
   case 118:
   if (yyn == 118)
-    /* "jpic.y":528  */ /* lalr1.java:476  */
+    /* "jpic.y":527  */ /* lalr1.java:476  */
     {yyval = CornerType.SOUTH_WEST;};
   break;
     
 
   case 119:
   if (yyn == 119)
-    /* "jpic.y":530  */ /* lalr1.java:476  */
+    /* "jpic.y":529  */ /* lalr1.java:476  */
     {yyval = CornerType.CENTER;};
   break;
     
 
   case 120:
   if (yyn == 120)
-    /* "jpic.y":532  */ /* lalr1.java:476  */
+    /* "jpic.y":531  */ /* lalr1.java:476  */
     {yyval = CornerType.START;};
   break;
     
 
   case 121:
   if (yyn == 121)
-    /* "jpic.y":534  */ /* lalr1.java:476  */
+    /* "jpic.y":533  */ /* lalr1.java:476  */
     {yyval = CornerType.END;};
   break;
     
 
   case 122:
   if (yyn == 122)
-    /* "jpic.y":536  */ /* lalr1.java:476  */
+    /* "jpic.y":535  */ /* lalr1.java:476  */
     {yyval = CornerType.NORTH;};
   break;
     
 
   case 123:
   if (yyn == 123)
-    /* "jpic.y":538  */ /* lalr1.java:476  */
+    /* "jpic.y":537  */ /* lalr1.java:476  */
     {yyval = CornerType.SOUTH;};
   break;
     
 
   case 124:
   if (yyn == 124)
-    /* "jpic.y":540  */ /* lalr1.java:476  */
+    /* "jpic.y":539  */ /* lalr1.java:476  */
     {yyval = CornerType.WEST;};
   break;
     
 
   case 125:
   if (yyn == 125)
-    /* "jpic.y":542  */ /* lalr1.java:476  */
+    /* "jpic.y":541  */ /* lalr1.java:476  */
     {yyval = CornerType.EAST;};
   break;
     
 
   case 126:
   if (yyn == 126)
-    /* "jpic.y":544  */ /* lalr1.java:476  */
+    /* "jpic.y":543  */ /* lalr1.java:476  */
     {yyval = CornerType.NORTH_WEST;};
   break;
     
 
   case 127:
   if (yyn == 127)
-    /* "jpic.y":546  */ /* lalr1.java:476  */
+    /* "jpic.y":545  */ /* lalr1.java:476  */
     {yyval = CornerType.SOUTH_WEST;};
   break;
     
 
   case 128:
   if (yyn == 128)
-    /* "jpic.y":548  */ /* lalr1.java:476  */
+    /* "jpic.y":547  */ /* lalr1.java:476  */
     {yyval = CornerType.NORTH_EAST;};
   break;
     
 
   case 129:
   if (yyn == 129)
-    /* "jpic.y":550  */ /* lalr1.java:476  */
+    /* "jpic.y":549  */ /* lalr1.java:476  */
     {yyval = CornerType.SOUTH_EAST;};
   break;
     
 
   case 130:
   if (yyn == 130)
-    /* "jpic.y":552  */ /* lalr1.java:476  */
+    /* "jpic.y":551  */ /* lalr1.java:476  */
     {yyval = CornerType.WEST;};
   break;
     
 
   case 131:
   if (yyn == 131)
-    /* "jpic.y":554  */ /* lalr1.java:476  */
+    /* "jpic.y":553  */ /* lalr1.java:476  */
     {yyval = CornerType.EAST;};
   break;
     
 
   case 132:
   if (yyn == 132)
-    /* "jpic.y":556  */ /* lalr1.java:476  */
+    /* "jpic.y":555  */ /* lalr1.java:476  */
     {yyval = CornerType.NORTH_WEST;};
   break;
     
 
   case 133:
   if (yyn == 133)
-    /* "jpic.y":558  */ /* lalr1.java:476  */
+    /* "jpic.y":557  */ /* lalr1.java:476  */
     {yyval = CornerType.SOUTH_WEST;};
   break;
     
 
   case 134:
   if (yyn == 134)
-    /* "jpic.y":560  */ /* lalr1.java:476  */
+    /* "jpic.y":559  */ /* lalr1.java:476  */
     {yyval = CornerType.NORTH_EAST;};
   break;
     
 
   case 135:
   if (yyn == 135)
-    /* "jpic.y":562  */ /* lalr1.java:476  */
+    /* "jpic.y":561  */ /* lalr1.java:476  */
     {yyval = CornerType.SOUTH_EAST;};
   break;
     
 
   case 136:
   if (yyn == 136)
-    /* "jpic.y":564  */ /* lalr1.java:476  */
+    /* "jpic.y":563  */ /* lalr1.java:476  */
     {yyval = CornerType.NORTH;};
   break;
     
 
   case 137:
   if (yyn == 137)
-    /* "jpic.y":566  */ /* lalr1.java:476  */
+    /* "jpic.y":565  */ /* lalr1.java:476  */
     {yyval = CornerType.SOUTH;};
   break;
     
 
   case 138:
   if (yyn == 138)
-    /* "jpic.y":568  */ /* lalr1.java:476  */
+    /* "jpic.y":567  */ /* lalr1.java:476  */
     {yyval = CornerType.EAST;};
   break;
     
 
   case 139:
   if (yyn == 139)
-    /* "jpic.y":570  */ /* lalr1.java:476  */
+    /* "jpic.y":569  */ /* lalr1.java:476  */
     {yyval = CornerType.WEST;};
   break;
     
 
   case 140:
   if (yyn == 140)
-    /* "jpic.y":572  */ /* lalr1.java:476  */
+    /* "jpic.y":571  */ /* lalr1.java:476  */
     {yyval = CornerType.CENTER;};
   break;
     
 
   case 141:
   if (yyn == 141)
-    /* "jpic.y":574  */ /* lalr1.java:476  */
+    /* "jpic.y":573  */ /* lalr1.java:476  */
     {yyval = CornerType.START;};
   break;
     
 
   case 142:
   if (yyn == 142)
-    /* "jpic.y":576  */ /* lalr1.java:476  */
+    /* "jpic.y":575  */ /* lalr1.java:476  */
     {yyval = CornerType.END;};
   break;
     
 
   case 143:
   if (yyn == 143)
-    /* "jpic.y":589  */ /* lalr1.java:476  */
+    /* "jpic.y":588  */ /* lalr1.java:476  */
     {yyval=((Expr)(yystack.valueAt (1-(1))));};
   break;
     
 
   case 144:
   if (yyn == 144)
-    /* "jpic.y":591  */ /* lalr1.java:476  */
+    /* "jpic.y":590  */ /* lalr1.java:476  */
     {yyval=((Expr)(yystack.valueAt (1-(1))));};
   break;
     
 
   case 145:
   if (yyn == 145)
-    /* "jpic.y":596  */ /* lalr1.java:476  */
+    /* "jpic.y":595  */ /* lalr1.java:476  */
     {yyval = text(((String)(yystack.valueAt (1-(1)))));};
   break;
     
 
   case 146:
   if (yyn == 146)
-    /* "jpic.y":598  */ /* lalr1.java:476  */
+    /* "jpic.y":597  */ /* lalr1.java:476  */
     {yyval = compute(text(((String)(yystack.valueAt (3-(1))))),text(((String)(yystack.valueAt (3-(3))))),EQUALEQUAL);};
   break;
     
 
   case 147:
   if (yyn == 147)
-    /* "jpic.y":600  */ /* lalr1.java:476  */
+    /* "jpic.y":599  */ /* lalr1.java:476  */
     {yyval = compute(text(((String)(yystack.valueAt (3-(1))))),text(((String)(yystack.valueAt (3-(3))))),NOTEQUAL);};
   break;
     
 
   case 148:
   if (yyn == 148)
-    /* "jpic.y":605  */ /* lalr1.java:476  */
+    /* "jpic.y":604  */ /* lalr1.java:476  */
     {yyval=var(((String)(yystack.valueAt (1-(1)))));};
   break;
     
 
   case 149:
   if (yyn == 149)
-    /* "jpic.y":607  */ /* lalr1.java:476  */
+    /* "jpic.y":606  */ /* lalr1.java:476  */
     {yyval = number(((Number)(yystack.valueAt (1-(1)))));};
   break;
     
 
   case 150:
   if (yyn == 150)
-    /* "jpic.y":609  */ /* lalr1.java:476  */
+    /* "jpic.y":608  */ /* lalr1.java:476  */
     {yyval=expr_position(((Place)(yystack.valueAt (2-(1)))),DOT_X);};
   break;
     
 
   case 151:
   if (yyn == 151)
-    /* "jpic.y":611  */ /* lalr1.java:476  */
+    /* "jpic.y":610  */ /* lalr1.java:476  */
     {yyval=expr_position(((Place)(yystack.valueAt (2-(1)))),DOT_Y);};
   break;
     
 
   case 152:
   if (yyn == 152)
-    /* "jpic.y":613  */ /* lalr1.java:476  */
+    /* "jpic.y":612  */ /* lalr1.java:476  */
     {yyval=expr_position(((Place)(yystack.valueAt (2-(1)))),DOT_HT);};
   break;
     
 
   case 153:
   if (yyn == 153)
-    /* "jpic.y":615  */ /* lalr1.java:476  */
+    /* "jpic.y":614  */ /* lalr1.java:476  */
     {yyval=expr_position(((Place)(yystack.valueAt (2-(1)))),DOT_WID);};
   break;
     
 
   case 154:
   if (yyn == 154)
-    /* "jpic.y":617  */ /* lalr1.java:476  */
+    /* "jpic.y":616  */ /* lalr1.java:476  */
     {yyval=expr_position(((Place)(yystack.valueAt (2-(1)))),DOT_RAD);};
   break;
     
 
   case 155:
   if (yyn == 155)
-    /* "jpic.y":619  */ /* lalr1.java:476  */
+    /* "jpic.y":618  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (3-(1)))),((Expr)(yystack.valueAt (3-(3)))),'+');};
   break;
     
 
   case 156:
   if (yyn == 156)
-    /* "jpic.y":621  */ /* lalr1.java:476  */
+    /* "jpic.y":620  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (3-(1)))),((Expr)(yystack.valueAt (3-(3)))),'-');};
   break;
     
 
   case 157:
   if (yyn == 157)
-    /* "jpic.y":623  */ /* lalr1.java:476  */
+    /* "jpic.y":622  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (3-(1)))),((Expr)(yystack.valueAt (3-(3)))),'*');};
   break;
     
 
   case 158:
   if (yyn == 158)
-    /* "jpic.y":625  */ /* lalr1.java:476  */
+    /* "jpic.y":624  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (3-(1)))),((Expr)(yystack.valueAt (3-(3)))),'/');};
   break;
     
 
   case 159:
   if (yyn == 159)
-    /* "jpic.y":627  */ /* lalr1.java:476  */
+    /* "jpic.y":626  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (3-(1)))),((Expr)(yystack.valueAt (3-(3)))),'%');};
   break;
     
 
   case 160:
   if (yyn == 160)
-    /* "jpic.y":629  */ /* lalr1.java:476  */
+    /* "jpic.y":628  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (3-(1)))),((Expr)(yystack.valueAt (3-(3)))),'^');};
   break;
     
 
   case 161:
   if (yyn == 161)
-    /* "jpic.y":631  */ /* lalr1.java:476  */
+    /* "jpic.y":630  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (2-(2)))),null,NEGATE);};
   break;
     
 
   case 162:
   if (yyn == 162)
-    /* "jpic.y":633  */ /* lalr1.java:476  */
+    /* "jpic.y":632  */ /* lalr1.java:476  */
     {yyval = ((Expr)(yystack.valueAt (3-(2))));};
   break;
     
 
   case 163:
   if (yyn == 163)
-    /* "jpic.y":635  */ /* lalr1.java:476  */
+    /* "jpic.y":634  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (4-(3)))),null,SIN);};
   break;
     
 
   case 164:
   if (yyn == 164)
-    /* "jpic.y":637  */ /* lalr1.java:476  */
+    /* "jpic.y":636  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (4-(3)))),null,COS);};
   break;
     
 
   case 165:
   if (yyn == 165)
-    /* "jpic.y":639  */ /* lalr1.java:476  */
+    /* "jpic.y":638  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (6-(3)))),((Expr)(yystack.valueAt (6-(5)))),ATAN2);};
   break;
     
 
   case 166:
   if (yyn == 166)
-    /* "jpic.y":641  */ /* lalr1.java:476  */
+    /* "jpic.y":640  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (4-(3)))),null,LOG);};
   break;
     
 
   case 167:
   if (yyn == 167)
-    /* "jpic.y":643  */ /* lalr1.java:476  */
+    /* "jpic.y":642  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (4-(3)))),null,'^');};
   break;
     
 
   case 168:
   if (yyn == 168)
-    /* "jpic.y":645  */ /* lalr1.java:476  */
+    /* "jpic.y":644  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (4-(3)))),null,SQRT);};
   break;
     
 
   case 169:
   if (yyn == 169)
-    /* "jpic.y":647  */ /* lalr1.java:476  */
+    /* "jpic.y":646  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (6-(3)))),((Expr)(yystack.valueAt (6-(5)))),K_MAX);};
   break;
     
 
   case 170:
   if (yyn == 170)
-    /* "jpic.y":649  */ /* lalr1.java:476  */
+    /* "jpic.y":648  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (6-(3)))),((Expr)(yystack.valueAt (6-(5)))),K_MIN);};
   break;
     
 
   case 171:
   if (yyn == 171)
-    /* "jpic.y":651  */ /* lalr1.java:476  */
+    /* "jpic.y":650  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (4-(3)))),null,INT);};
   break;
     
 
   case 172:
   if (yyn == 172)
-    /* "jpic.y":653  */ /* lalr1.java:476  */
+    /* "jpic.y":652  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (4-(3)))),null,RAND);};
   break;
     
 
   case 173:
   if (yyn == 173)
-    /* "jpic.y":655  */ /* lalr1.java:476  */
+    /* "jpic.y":654  */ /* lalr1.java:476  */
     {yyval = compute(null,null,RAND);};
   break;
     
 
   case 174:
   if (yyn == 174)
-    /* "jpic.y":657  */ /* lalr1.java:476  */
+    /* "jpic.y":656  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (4-(3)))),null,SRAND);};
   break;
     
 
   case 175:
   if (yyn == 175)
-    /* "jpic.y":659  */ /* lalr1.java:476  */
+    /* "jpic.y":658  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (3-(1)))),((Expr)(yystack.valueAt (3-(3)))),'<');};
   break;
     
 
   case 176:
   if (yyn == 176)
-    /* "jpic.y":661  */ /* lalr1.java:476  */
+    /* "jpic.y":660  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (3-(1)))),((Expr)(yystack.valueAt (3-(3)))),LESSEQUAL);};
   break;
     
 
   case 177:
   if (yyn == 177)
-    /* "jpic.y":663  */ /* lalr1.java:476  */
+    /* "jpic.y":662  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (3-(1)))),((Expr)(yystack.valueAt (3-(3)))),'>');};
   break;
     
 
   case 178:
   if (yyn == 178)
-    /* "jpic.y":665  */ /* lalr1.java:476  */
+    /* "jpic.y":664  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (3-(1)))),((Expr)(yystack.valueAt (3-(3)))),GREATEREQUAL);};
   break;
     
 
   case 179:
   if (yyn == 179)
-    /* "jpic.y":667  */ /* lalr1.java:476  */
+    /* "jpic.y":666  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (3-(1)))),((Expr)(yystack.valueAt (3-(3)))),EQUALEQUAL);};
   break;
     
 
   case 180:
   if (yyn == 180)
-    /* "jpic.y":669  */ /* lalr1.java:476  */
+    /* "jpic.y":668  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (3-(1)))),((Expr)(yystack.valueAt (3-(3)))),NOTEQUAL);};
   break;
     
 
   case 181:
   if (yyn == 181)
-    /* "jpic.y":671  */ /* lalr1.java:476  */
+    /* "jpic.y":670  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (3-(1)))),((Expr)(yystack.valueAt (3-(3)))),ANDAND);};
   break;
     
 
   case 182:
   if (yyn == 182)
-    /* "jpic.y":673  */ /* lalr1.java:476  */
+    /* "jpic.y":672  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (3-(1)))),((Expr)(yystack.valueAt (3-(3)))),OROR);};
   break;
     
 
   case 183:
   if (yyn == 183)
-    /* "jpic.y":675  */ /* lalr1.java:476  */
+    /* "jpic.y":674  */ /* lalr1.java:476  */
     {yyval = compute(((Expr)(yystack.valueAt (2-(2)))),null,'!');};
   break;
     
 
 
-/* "JPicParserBody.java":1902  */ /* lalr1.java:476  */
+/* "JPicParserBody.java":1901  */ /* lalr1.java:476  */
         default: break;
       }
 
@@ -1979,7 +1978,7 @@ abstract class JPicParserBody extends JPicActions
    * @return <tt>true</tt> if the parsing succeeds.  Note that this does not
    *          imply that there were no syntax errors.
    */
-   public boolean parse () throws Exception, Exception
+   public boolean parse () throws JPicException, Exception
 
   {
     /* @$.  */
@@ -2833,25 +2832,25 @@ private static final short yycheck_[] = yycheck_init();
   {
     return new short[]
     {
-       0,   227,   227,   229,   234,   236,   238,   240,   242,   247,
-     249,   254,   255,   256,   257,   258,   259,   260,   261,   270,
-     275,   280,   285,   290,   291,   292,   293,   297,   301,   303,
-     305,   310,   312,   316,   321,   325,   327,   332,   334,   336,
-     338,   340,   342,   344,   346,   351,   353,   358,   360,   362,
-     364,   366,   368,   370,   372,   374,   376,   378,   380,   382,
-     384,   386,   388,   390,   392,   394,   396,   398,   400,   402,
-     404,   406,   408,   410,   412,   414,   416,   418,   420,   422,
-     424,   426,   428,   430,   432,   434,   436,   441,   443,   445,
-     450,   452,   454,   456,   458,   460,   462,   464,   469,   471,
-     477,   479,   481,   483,   488,   490,   495,   499,   501,   506,
-     508,   513,   515,   517,   519,   521,   523,   525,   527,   529,
-     531,   533,   535,   537,   539,   541,   543,   545,   547,   549,
-     551,   553,   555,   557,   559,   561,   563,   565,   567,   569,
-     571,   573,   575,   588,   590,   595,   597,   599,   604,   606,
-     608,   610,   612,   614,   616,   618,   620,   622,   624,   626,
-     628,   630,   632,   634,   636,   638,   640,   642,   644,   646,
-     648,   650,   652,   654,   656,   658,   660,   662,   664,   666,
-     668,   670,   672,   674,   678,   678
+       0,   226,   226,   228,   233,   235,   237,   239,   241,   246,
+     248,   253,   254,   255,   256,   257,   258,   259,   260,   269,
+     274,   279,   284,   289,   290,   291,   292,   296,   300,   302,
+     304,   309,   311,   315,   320,   324,   326,   331,   333,   335,
+     337,   339,   341,   343,   345,   350,   352,   357,   359,   361,
+     363,   365,   367,   369,   371,   373,   375,   377,   379,   381,
+     383,   385,   387,   389,   391,   393,   395,   397,   399,   401,
+     403,   405,   407,   409,   411,   413,   415,   417,   419,   421,
+     423,   425,   427,   429,   431,   433,   435,   440,   442,   444,
+     449,   451,   453,   455,   457,   459,   461,   463,   468,   470,
+     476,   478,   480,   482,   487,   489,   494,   498,   500,   505,
+     507,   512,   514,   516,   518,   520,   522,   524,   526,   528,
+     530,   532,   534,   536,   538,   540,   542,   544,   546,   548,
+     550,   552,   554,   556,   558,   560,   562,   564,   566,   568,
+     570,   572,   574,   587,   589,   594,   596,   598,   603,   605,
+     607,   609,   611,   613,   615,   617,   619,   621,   623,   625,
+     627,   629,   631,   633,   635,   637,   639,   641,   643,   645,
+     647,   649,   651,   653,   655,   657,   659,   661,   663,   665,
+     667,   669,   671,   673,   677,   677
     };
   }
 
@@ -2943,13 +2942,13 @@ private static final short yycheck_[] = yycheck_init();
 
 /* User implementation code.  */
 /* Unqualified %code blocks.  */
-/* "jpic.y":43  */ /* lalr1.java:1060  */
+/* "jpic.y":42  */ /* lalr1.java:1060  */
 
     // Provide accessors for the parser lexer
     Lexer getLexer() {return this.yylexer;}
     void setLexer(Lexer lexer) {this.yylexer = lexer;}
 
-/* "JPicParserBody.java":2953  */ /* lalr1.java:1060  */
+/* "JPicParserBody.java":2952  */ /* lalr1.java:1060  */
 
 }
 

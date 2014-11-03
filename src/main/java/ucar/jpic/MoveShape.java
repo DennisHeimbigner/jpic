@@ -1,28 +1,32 @@
-class move_object : public graphic_object {
-  position strt;
-  position en;
-public:
-  move_object(const position &s, const position &e);
-  position origin() { return en; }
-  object_type type() { return MOVE_OBJECT; }
-  void update_bounding_box(bounding_box *);
-  void move_by(const position &);
-};
+/*
+This software is released under the Licence terms
+described in the file LICENSE.txt.
+*/
 
-move_object::move_object(const position &s, const position &e)
-: strt(s), en(e)
+package ucar.jpic;
+
+public class MoveShape extends GraphicObject
 {
+  Position strt;
+  Position en;
+
+public move_object(Position s, Position e)
+{
+  this.strt = (s);
+  this.en = (e);
 }
 
-void move_object::update_bounding_box(bounding_box *p)
+void update_bounding_box(BoundingBox p)
 {
-  p->encompass(strt);
-  p->encompass(en);
+  p.encompass(strt);
+  p.encompass(en);
 }
 
-void move_object::move_by(const position &a)
+void move_by(Position a)
 {
-  strt += a;
-  en += a;
+  strt.add(a);
+  en.add(a);
+}
+
 }
 

@@ -7,7 +7,7 @@ package ucar.jpic;
 
 public class BoundingBox
 {
-  int blank = 1;
+  boolean blank = true;
   Position ll = null;
   Position ur = null;
 
@@ -15,10 +15,10 @@ public class BoundingBox
 
   void encompass(Position pos)
   {
-    if(blank == 0) {
+    if(!blank) {
         ll = pos;
         ur = pos;
-	blank = 0;
+	blank = false;
     } else {
       if(pos.x < ll.x)
         ll.x = pos.x;

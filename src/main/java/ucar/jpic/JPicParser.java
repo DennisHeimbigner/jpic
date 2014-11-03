@@ -11,10 +11,15 @@ public class JPicParser extends JPicParserBody
 {
 
     //////////////////////////////////////////////////
+    // Instance variables
+
+    protected ElementList picture = null;
+
+    //////////////////////////////////////////////////
     // Constructors
 
     public JPicParser()
-        throws Exception
+        throws JPicException
     {
         super(null);
         JPicLexer lexer = new JPicLexer(this);
@@ -24,44 +29,52 @@ public class JPicParser extends JPicParserBody
     //////////////////////////////////////////////////
     // Get/Set
 
+    public ElementList
+    getPicture()
+    {
+	return this.picture;
+    }
+
     //////////////////////////////////////////////////
     // Parser API
 
     public boolean
     parse(String document)
-        throws Exception
+        throws JPicException
     {
         ((JPicLexer) getLexer()).setText(document);
         return super.parse();
     }
 
     //////////////////////////////////////////////////
-    // Abstract Parser actions
+    // Abstract Parser action implementations
 
     @Override
     void
     picture(ElementList elements)
     {
+	this.picture = elements;
     }
 
     @Override
     void
     setlabel(Element element, String label)
     {
+	element.setLabel(label);	
     }
 
     @Override
     Element
     macro_define()
     {
-        return null;
+	((JPicLexer)getLexer()).macro_collect();
     }
 
     @Override
     Element
     undef(String name)
     {
-        return null;
+	Macros.getMacros.remove(name);
     }
 
     @Override

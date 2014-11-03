@@ -1,30 +1,35 @@
-class ellipse_object : public closed_object {
-public:
-  ellipse_object(const position &);
-  position north_east() { return position(cent.x + dim.x/(M_SQRT2*2.0),
-					  cent.y + dim.y/(M_SQRT2*2.0)); }
-  position north_west() { return position(cent.x - dim.x/(M_SQRT2*2.0),
-					  cent.y + dim.y/(M_SQRT2*2.0)); }
-  position south_east() { return position(cent.x + dim.x/(M_SQRT2*2.0),
-					  cent.y - dim.y/(M_SQRT2*2.0)); }
-  position south_west() { return position(cent.x - dim.x/(M_SQRT2*2.0),
-					  cent.y - dim.y/(M_SQRT2*2.0)); }
-  double radius() { return dim.x/2.0; }
-  object_type type() { return ELLIPSE_OBJECT; }
-  void print();
-};
+/*
+This software is released under the Licence terms
+described in the file LICENSE.txt.
+*/
 
-ellipse_object::ellipse_object(const position &d)
-: closed_object(d)
+package ucar.jpic;
+
+public class EllipseShape extends ClosedShape
 {
-}
 
-void ellipse_object::print()
-{
-  if (lt.type == line_type::invisible && fill < 0.0 && color_fill == 0)
-    return;
-  out->set_color(color_fill, graphic_object::get_outline_color());
-  out->ellipse(cent, dim, lt, fill);
-  out->reset_color();
-}
+    public EllipseShape()
+    {
+    }
 
+    public void iit(Position d)
+    {
+        super.init(d);
+    }
+
+    @Override
+    ShapeType type()
+    {
+        return ShapeType.ELLIPSE;
+    }
+
+    void print()
+    {
+        if(lt.type == PropertyType.INVISIBLE && fill < 0.0 && color_fill == null)
+            return;
+        out.set_color(color_fill, get_outline_color());
+        out.ellipse(center, dim, lt, fill);
+        out.reset_color();
+    }
+
+}

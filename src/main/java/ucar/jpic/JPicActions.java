@@ -5,9 +5,7 @@ described in the file LICENSE.txt.
 
 package ucar.jpic;
 
-import static ucar.jpic.Element.*;
-
-abstract public class JPicActions
+abstract public class JPicActions implements Types
 {
 
     //////////////////////////////////////////////////

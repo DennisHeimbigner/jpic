@@ -1,11 +1,14 @@
-class text_object : public rectangle_object {
-public:
-  text_object(const position &);
-  object_type type() { return TEXT_OBJECT; }
-};
+/*
+This software is released under the Licence terms
+described in the file LICENSE.txt.
+*/
 
-text_object::text_object(const position &d)
-: rectangle_object(d)
+package ucar.jpic;
+
+public class TextShape extends RectangleShape
 {
-}
+  public text_object(Position d) {super(d);}
 
+  @Override
+  public ShapeType type() { return ShapeType.TEXT; }
+}

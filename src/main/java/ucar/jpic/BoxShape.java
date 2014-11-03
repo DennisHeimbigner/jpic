@@ -1,66 +1,74 @@
-class box_object : public closed_object {
-  double xrad;
-  double yrad;
-public:
-  box_object(const position &, double);
-  object_type type() { return BOX_OBJECT; }
-  void print();
-  position north_east();
-  position north_west();
-  position south_east();
-  position south_west();
-};
+/*
+This software is released under the Licence terms
+described in the file LICENSE.txt.
+*/
 
-box_object::box_object(const position &pos, double r)
-: closed_object(pos), xrad(dim.x > 0 ? r : -r), yrad(dim.y > 0 ? r : -r)
+package ucar.jpic;
+
+public class BoxShape extends ClosedShape
 {
-}
+    static final double CHOP_FACTOR = 1.0 - 1.0 / SQRT2;
 
-const double CHOP_FACTOR = 1.0 - 1.0/M_SQRT2;
+    double xrad;
+    double yrad;
 
-position box_object::north_east()
-{
-  return position(cent.x + dim.x/2.0 - CHOP_FACTOR*xrad,
-		  cent.y + dim.y/2.0 - CHOP_FACTOR*yrad);
-}
+    public BoxShape()
+    {
+    }
 
-position box_object::north_west()
-{
-  return position(cent.x - dim.x/2.0 + CHOP_FACTOR*xrad,
-		  cent.y + dim.y/2.0 - CHOP_FACTOR*yrad);
-}
+    public BoxShape init(Position pos, double r)
+    {
+        super.init(pos);
+        this.xrad = (dim.x > 0 ? r : -r);
+        this.yrad = (dim.y > 0 ? r : -r);
+        return this;
+    }
 
-position box_object::south_east()
-{
-  return position(cent.x + dim.x/2.0 - CHOP_FACTOR*xrad,
-		  cent.y - dim.y/2.0 + CHOP_FACTOR*yrad);
-}
+    public ShapeType type() {return ShapeType.BOX;}
 
-position box_object::south_west()
-{
-  return position(cent.x - dim.x/2.0 + CHOP_FACTOR*xrad,
-		  cent.y - dim.y/2.0 + CHOP_FACTOR*yrad);
-}
+    public Position north_east()
+    {
+        return new Position(center.x + dim.x / 2.0 - CHOP_FACTOR * xrad,
+            center.y + dim.y / 2.0 - CHOP_FACTOR * yrad);
+    }
 
-void box_object::print()
-{
-  if (lt.type == line_type::invisible && fill < 0.0 && color_fill == 0)
-    return;
-  out->set_color(color_fill, graphic_object::get_outline_color());
-  if (xrad == 0.0) {
-    distance dim2 = dim/2.0;
-    position vec[4];
-    /* error("x slanted %1", xslanted); */
-    /* error("y slanted %1", yslanted); */
-    vec[0] = cent + position(dim2.x, -(dim2.y - yslanted));	     /* lr */
-    vec[1] = cent + position(dim2.x + xslanted, dim2.y + yslanted);  /* ur */
-    vec[2] = cent + position(-(dim2.x - xslanted), dim2.y);	     /* ul */
-    vec[3] = cent + position(-(dim2.x), -dim2.y);		     /* ll */
-    out->polygon(vec, 4, lt, fill);
-  }
-  else {
-    distance abs_dim(fabs(dim.x), fabs(dim.y));
-    out->rounded_box(cent, abs_dim, fabs(xrad), lt, fill, color_fill);
-  }
-  out->reset_color();
+    public Position north_west()
+    {
+        return new Position(center.x - dim.x / 2.0 + CHOP_FACTOR * xrad,
+            center.y + dim.y / 2.0 - CHOP_FACTOR * yrad);
+    }
+
+    public Position south_east()
+    {
+        return new Position(center.x + dim.x / 2.0 - CHOP_FACTOR * xrad,
+            center.y - dim.y / 2.0 + CHOP_FACTOR * yrad);
+    }
+
+    public Position south_west()
+    {
+        return new Position(center.x - dim.x / 2.0 + CHOP_FACTOR * xrad,
+            center.y - dim.y / 2.0 + CHOP_FACTOR * yrad);
+    }
+
+    public void print()
+    {
+        if(lt.type == PropertyType.INVISIBLE && fill < 0.0 && color_fill == null)
+            return;
+        out.set_color(color_fill, get_outline_color());
+        if(xrad == 0.0) {
+            Distance dim2 = Position.divide(dim, 2.0);
+            Position[] vec = new Position[4];
+            /* error("x slanted %1", xslanted); */
+            /* error("y slanted %1", yslanted); */
+            vec[0] = Position.add(center, new Position(dim2.x(), -(dim2.y() - yslanted)));/* lr */
+            vec[1] = Position.add(center, new Position(dim2.x() + xslanted, dim2.y() + yslanted));/* ur */
+            vec[2] = Position.add(center, new Position(-(dim2.x() - xslanted), dim2.y()));/* ul */
+            vec[3] = Position.add(center, new Position(-(dim2.x()), -dim2.y()));/* ll */
+            out.polygon(vec, 4, lt, fill);
+        } else {
+            Distance abs_dim = new Position(Math.abs(dim.x), Math.abs(dim.y));
+            out.rounded_box(center, abs_dim, Math.abs(xrad), lt, fill, color_fill);
+        }
+        out.reset_color();
+    }
 }

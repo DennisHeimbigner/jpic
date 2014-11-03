@@ -5,9 +5,12 @@ described in the file LICENSE.txt.
 
 package ucar.jpic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static ucar.jpic.JPicParserBody.Lexer.*;
 
-public class JPicLexer implements JPicParserBody.Lexer
+public class JPicLexer implements JPicParserBody.Lexer, Types
 {
 
     //////////////////////////////////////////////////
@@ -63,7 +66,7 @@ public class JPicLexer implements JPicParserBody.Lexer
     {
         // Don't bother with getters
         String text = null; // source of text to lex
-	int mark = 0;
+        int mark = 0;
         int next = 0; // next unread character
         int textlen = 0;
 
@@ -82,8 +85,8 @@ public class JPicLexer implements JPicParserBody.Lexer
         {
             this.textlen = text.length();
             this.text = text + '\0'; // Null terminate
-	    next = 0;
-	    mark = 0;
+            next = 0;
+            mark = 0;
         }
 
         public String getText()
@@ -123,25 +126,38 @@ public class JPicLexer implements JPicParserBody.Lexer
             this.mark = this.next;
         }
 
-	Pos
-	toPos(int mark)
+        Pos
+        toPos(int mark)
         {
-	    int lineno = 0;
-	    int linepos = 0;
-	    for(int i=0;i<mark;i++) {
-		if(text.charAt(i) == '\n') {lineno++; linepos = i;}
-	    }
-	    int charno = (mark - linepos);
-	    return new Pos(lineno,charno);
-	}
+            int lineno = 0;
+            int linepos = 0;
+            for(int i = 0;i < mark;i++) {
+                if(text.charAt(i) == '\n') {
+                    lineno++;
+                    linepos = i;
+                }
+            }
+            int charno = (mark - linepos);
+            return new Pos(lineno, charno);
+        }
     }
 
     static public class Pos
     {
-	public int lineno = 0;
-	public int charno = 0;
-        public Pos(int lineno, int charno) {this.lineno=lineno; this.charno=charno;}
-	public void clear() {this.lineno = 0; this.charno = 0;}
+        public int lineno = 0;
+        public int charno = 0;
+
+        public Pos(int lineno, int charno)
+        {
+            this.lineno = lineno;
+            this.charno = charno;
+        }
+
+        public void clear()
+        {
+            this.lineno = 0;
+            this.charno = 0;
+        }
     }
 
     //////////////////////////////////////////////////
@@ -204,7 +220,7 @@ public class JPicLexer implements JPicParserBody.Lexer
 
     public int
     yylex()
-        throws Exception
+        throws JPicException
     {
         int token;
         int c = 0;
@@ -298,7 +314,7 @@ public class JPicLexer implements JPicParserBody.Lexer
                 }
                 // pushback the delimiter
                 if(c != EOS) text.backup();
-		try {// See if this looks like an integer
+                try {// See if this looks like an integer
                     long num = Long.parseLong(yytext.toString());
                     token = JPicParser.Lexer.NUMBER;
                 } catch (NumberFormatException nfe) {
@@ -319,7 +335,7 @@ public class JPicLexer implements JPicParserBody.Lexer
 
     void
     dumptoken(int token, String lval)
-        throws Exception
+        throws JPicException
     {
         String stoken;
         if(token < '\177')
@@ -344,7 +360,7 @@ public class JPicLexer implements JPicParserBody.Lexer
 
     static int
     tohex(int c)
-        throws Exception
+        throws JPicException
     {
         if(c >= 'a' && c <= 'f') return (c - 'a') + 0xa;
         if(c >= 'A' && c <= 'F') return (c - 'A') + 0xa;
@@ -381,35 +397,35 @@ public class JPicLexer implements JPicParserBody.Lexer
 
     public Pos getStartPos()
     {
-	return text.toPos(text.mark);	
+        return text.toPos(text.mark);
     }
 
     public Pos getEndPos()
     {
-	return text.toPos(text.next);	
+        return text.toPos(text.next);
     }
 
-    protected
-    macro_collect()
-	throw Exception
+    public void macro_collect()
+        throws JPicException
     {
-	//Get the name
-	int token = yylex();
-	if(token != NAME)
-	    throw new Exception("Macro has no name");
-	String name = getLval();
-	int depth = 0;	
-	List<Macro.MacroToken> body = new ArrayList<>();
-	do {
-	    token = yylex();
-	    if(token == EOS)
-	        throw new Exception("Macro has unbalanced '{}'");
-	    Object lval = getLval();
-	    Macro.MacroToken = new Macro.MacroToken(token,lval);
-	    if(token == '{') depth++;
-	    else if(token == '}') depth--;
-	} while(depth > 0);
-	Macro.macros.put(name,new Macro(name,body);
+        //Get the name
+        int token = yylex();
+        if(token != NAME)
+            throw new Exception("Macro has no name");
+        String name = (String)getLVal();
+        int depth = 0;
+        List<JPic.MacroToken> body = new ArrayList<>();
+        do {
+            token = yylex();
+            if(token == EOS)
+                throw new Exception("Macro has unbalanced '{}'");
+            Object lval = getLVal();
+            JPic.MacroToken mtoken = new JPic.MacroToken(token, lval);
+            body.add(mtoken);
+            if(token == '{') depth++;
+            else if(token == '}') depth--;
+        } while(depth > 0);
+        JPic.macros.put(name, new Macro(name, body);
     }
 
 }

@@ -1,16 +1,38 @@
-class linear_object : public graphic_object {
-protected:
-  char arrow_at_start;
-  char arrow_at_end;
-  arrow_head_type aht;
-  position strt;
-  position en;
-public:
-  linear_object(const position &s, const position &e);
-  position start() { return strt; }
-  position end() { return en; }
-  void move_by(const position &);
-  void update_bounding_box(bounding_box *) = 0;
-  object_type type() = 0;
-  void add_arrows(int at_start, int at_end, const arrow_head_type &);
-};
+/*
+This software is released under the Licence terms
+described in the file LICENSE.txt.
+*/
+
+package ucar.jpic;
+
+abstract public class LinearShape extends ShapeSpec
+{
+    boolean arrow_at_start = false;
+    boolean arrow_at_end = false;
+    ArrowHead aht = null;
+    Position strt = null;
+    Position en = null;
+
+    public LinearShape() {}
+
+    public void init(Position s, Position e)
+    {
+        this.strt = s;
+        this.en = e;
+    }
+
+    void move_by(Position a)
+    {
+        strt.add(a);
+        en.add(a);
+    }
+
+    void add_arrows(boolean at_start, boolean at_end,
+                    ArrowHead a)
+    {
+        arrow_at_start = at_start;
+        arrow_at_end = at_end;
+        aht = a;
+    }
+
+}

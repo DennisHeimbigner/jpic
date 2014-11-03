@@ -1,21 +1,36 @@
-class circle_object : public ellipse_object {
-public:
-  circle_object(double);
-  object_type type() { return CIRCLE_OBJECT; }
-  void print();
-};
+/*
+This software is released under the Licence terms
+described in the file LICENSE.txt.
+*/
 
-circle_object::circle_object(double diam)
-: ellipse_object(position(diam, diam))
-{
-}
+package ucar.jpic;
 
-void circle_object::print()
+public class CircleShape extends EllipseShape
 {
-  if (lt.type == line_type::invisible && fill < 0.0 && color_fill == 0)
-    return;
-  out->set_color(color_fill, graphic_object::get_outline_color());
-  out->circle(cent, dim.x/2.0, lt, fill);
-  out->reset_color();
+
+    public CircleShape()
+    {
+    }
+
+    public void init(double diam)
+    {
+        super.init(new Position(diam, diam));
+    }
+
+    @Override
+    ShapeType type()
+    {
+        return ShapeType.CIRCLE;
+    }
+
+    void print()
+        throws JPicException
+    {
+        if(lt.type == PropertyType.INVISIBLE && fill < 0.0 && color_fill == null)
+            return;
+        out.set_color(color_fill, super.get_outline_color());
+        out.circle(center(), dim.getX() / 2.0, lt, fill);
+        out.reset_color();
+    }
 }
 
