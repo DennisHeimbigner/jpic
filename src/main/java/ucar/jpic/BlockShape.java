@@ -11,7 +11,6 @@ import java.util.Map;
 public class BlockShape extends RectangleShape
 {
   ElementList oblist;
-  Place tbl;
   Map<String,Place> tbl = new HashMap<>();
 
   public BlockShape() {}
@@ -23,14 +22,16 @@ public class BlockShape extends RectangleShape
     tbl = t;  
   }
 
-void print()
+@Override
+public void print()
 {
   out.begin_block(south_west(), north_east());
   print_object_list(oblist);
   out.end_block();
 }
 
-void adjust_objectless_places(Map<String,Place> tbl, Position a)
+@Override
+public void adjust_objectless_places(Map<String,Place> tbl, Position a)
 {
   // Adjust all the labels that aren't attached to objects.
   for(Map.Entry<String,Place> entry: tbl) {
@@ -43,7 +44,8 @@ void adjust_objectless_places(Map<String,Place> tbl, Position a)
   }
 }
 
-void move_by(Position a)
+@Override
+public void move_by(Position a)
 {
   center.add(a);
   for(Shape p: oblist)
@@ -51,11 +53,13 @@ void move_by(Position a)
   adjust_objectless_places(tbl, a);
 }
 
-Place find_label(String name)
+@Override
+public Place find_label(String name)
 {
   return tbl.get(name);
 }
 
-ShapeType type() {return ShapeType.BLOCK;}
+@Override
+public ShapeType type() {return ShapeType.BLOCK;}
 
 }

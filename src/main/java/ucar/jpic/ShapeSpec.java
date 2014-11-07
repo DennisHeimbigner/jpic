@@ -57,9 +57,7 @@ abstract public class ShapeSpec extends GraphicObject
         this.type = type;
     }
 
-    abstract public void update_bounding_box(BoundingBox bb);
-
-    ShapeSpec
+    public ShapeSpec
     make_object(Position curpos, DirectionType dir)
         throws JPicException
     {
@@ -132,7 +130,7 @@ abstract public class ShapeSpec extends GraphicObject
         return obj;
     }
 
-    ShapeSpec make_box(Position curpos, DirectionType dir)
+    public ShapeSpec make_box(Position curpos, DirectionType dir)
         throws JPicException
     {
 
@@ -175,7 +173,7 @@ abstract public class ShapeSpec extends GraphicObject
         return p;
     }
 
-    Position
+    public Position
     position_rectangle(RectangleShape p, Position curpos, DirectionType dirp)
     {
         Position pos;
@@ -217,7 +215,7 @@ abstract public class ShapeSpec extends GraphicObject
     }
 
 
-    BlockShape
+    public BlockShape
     make_block(Position curpos, DirectionType dirp)
     {
         BoundingBox bb;
@@ -227,11 +225,11 @@ abstract public class ShapeSpec extends GraphicObject
         Position dim;
         if(!bb.blank) {
             Position m = Position.add((bb.ll, bb.ur).divide(2.0).negate();
-            for(Element p : oblist)
+            for(Element p : JPic.oblist)
                 if(p instanceof ShapeSpec)
                     ((ShapeSpec) p).move_by(m);
             adjust_objectless_places(tbl, m);
-            dim = bb.ur - bb.ll;
+            dim = Position.subtract(bb.ur,bb.ll);
         }
         if(flags.contains(PropertyType.WIDTH))
             dim.x = width;
@@ -239,24 +237,16 @@ abstract public class ShapeSpec extends GraphicObject
             dim.y = height;
         BlockShape block = new block_object(dim, oblist, tbl);
 
-        if(!
-
-            position_rectangle(block, curpos, dirp)
-
-            )
-
-        {
-            delete block;
-            block = 0;
+        if(!position_rectangle(block, curpos, dirp)) {
+            block = null;
         }
-
-        tbl = 0;
-        oblist.head = oblist.tail = 0;
+        tbl = null;
+        JPic.oblist = null;
         return block;
     }
 
 
-    ShapeSpec
+    public ShapeSpec
     make_text(Position curpos, DirectionType dirp)
     {
         if(!flags.contains(PropertyType.HEIGHT)) {
@@ -276,7 +266,7 @@ abstract public class ShapeSpec extends GraphicObject
         return p;
     }
 
-    ShapeSpec
+    public ShapeSpec
     make_ellipse(Position curpos, DirectionType dirp)
     {
         double last_ellipse_height;
@@ -305,7 +295,7 @@ abstract public class ShapeSpec extends GraphicObject
         return p;
     }
 
-    ShapeSpec
+    public ShapeSpec
     make_circle(Position curpos, DirectionType dirp)
     {
         static double last_circle_radius;
@@ -326,7 +316,7 @@ abstract public class ShapeSpec extends GraphicObject
         return p;
     }
 
-    ShapeSpec
+    public ShapeSpec
     make_line(Position curpos, DirectionType dirp)
     {
         static position last_line;
@@ -446,7 +436,7 @@ abstract public class ShapeSpec extends GraphicObject
     }
 
     // We ignore the with attribute. The at attribute always refers to the center.
-     ShapeSpec
+    public ShapeSpec
     make_arc(Position curpos, DirectionType dirp)
     {
         *dirp = dir;
@@ -508,7 +498,7 @@ abstract public class ShapeSpec extends GraphicObject
         return p;
     }
 
-    ShapeSpec
+    public ShapeSpec
     make_linear(Position curpos, DirectionType dirp)
     {
         linear_object * obj;
@@ -542,8 +532,7 @@ abstract public class ShapeSpec extends GraphicObject
         return obj;
     }
 
-    GraphicObject*object_spec::
-
+    public 
     make_move(Position curpos, direction*dirp)
     {
         static position last_move;
@@ -597,10 +586,49 @@ abstract public class ShapeSpec extends GraphicObject
         return p;
     }
 
-    ShapeSpec
+    public ShapeSpec
     make_move(Position pos, DirectionType dir)
     {
         return null;
     }
+
+    public void
+    adjust_objectless_places(Map<String, Place> tbl, Position a)
+    {
+      // Adjust all the labels that aren't attached to objects.
+      for(Map.Entry<String,Place> entry: tbl) {
+          String key = entry.getKey();
+          Place pl = entry.getValue();
+          if(key.charAt(0).is && pl.obj == null) {
+              pl.x += a.x;
+              pl.y += a.y;
+          }
+      }
+    }
+ 
+    //////////////////////////////////////////////////
+    // Abstract methods
+  abstract public Position origin();
+  abstract public double width();
+  abstract public double radius();
+  abstract public double height();
+  abstract public Position north();
+  abstract public Position south();
+  abstract public Position east();
+  abstract public Position west();
+  abstract public Position north_east();
+  abstract public Position north_west();
+  abstract public Position south_east();
+  abstract public Position south_west();
+  abstract public Position start();
+  abstract public Position end();
+  abstract public Position center();
+  abstract public Place find_label(String label);
+  abstract public void move_by(Position delta);
+  abstract public int blank();
+  abstract public public void update_bounding_box(BoundingBox bb);
+  abstract public ShapeType type();
+  abstract public void print();
+  abstract public void print_text();
 
 }

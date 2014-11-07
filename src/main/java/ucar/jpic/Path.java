@@ -40,7 +40,7 @@ public class Path extends Element
 
     public void append(String s)
     {
-        this.label_list.append(s);
+        this.label_list.add(s);
     }
 
     public void set_ypath(Path path)
@@ -57,13 +57,13 @@ public class Path extends Element
             return new Place(pos.x, pos.y, null);
 
         for(String l : label_list) {
-            if(p.obj == null || (p = p.obj.find_label(l)) == 0)
-                throw new Exception(String.format("object does not contain a place `%s'", l);
+            if(pl.obj == null || (pl = pl.obj.find_label(l)) == null)
+                throw new JPicException(String.format("object does not contain a place `%s'", l));
         }
-        if(corner == null || p.obj == null)
-            result = p;
+        if(corner == null || pl.obj == null)
+            result = pl;
         else {
-            Position ps = new Position((p.obj). * (crn)) ());
+            Position ps = new Position(pl.obj corner); ???
             result = new Place(ps.x, ps.y, null);
         }
         if(ypath != null) {
@@ -72,7 +72,7 @@ public class Path extends Element
             if(temp == null)
                 return null;
             result.y = temp.y;
-            if(result.obj != tem.obj)
+            if(result.obj != temp.obj)
                 result.obj = null;
         }
         return result;

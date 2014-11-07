@@ -170,6 +170,19 @@ public interface Types
         PropertyType type = PropertyType.SOLID;
         double dash_width = 1.0;
         double thickness = 1.0;        // the thickness is in points
+
+        public Line(PropertyType type, double dash_width, double thickness)
+        {
+            this.type = type;
+            this.dash_width = dash_width;
+            this.thickness = thickness;
+        }
+
+        public Line(Line lt)
+        {
+            this(lt.type, lt.dash_width, lt.thickness);
+        }
+
     }
 
     static public interface Corner
@@ -179,6 +192,7 @@ public interface Types
     static public interface Distance
     {
         public double x();
+
         public double y();
     }
 
@@ -225,8 +239,10 @@ public interface Types
 
     static public class Place extends Element
     {
-        ShapeSpec obj;
-        double x, y;
+        public ShapeSpec obj;
+        public double x, y;
+        public Place(double x, double y, ShapeSpec obj)
+        {this.obj = obj; this.x = x; this.y = y;}
     }
 
     static public class Pair extends Position

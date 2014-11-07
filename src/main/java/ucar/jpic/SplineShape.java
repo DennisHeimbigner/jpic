@@ -14,7 +14,7 @@ public class SplineShape extends LineShape
         super.init(s, e, p, i);
     }
 
-    ShapeType type()
+    public ShapeType type()
     {
         return ShapeType.SPLINE;
     }
@@ -29,47 +29,46 @@ public class SplineShape extends LineShape
         // shorten line length for spline to avoid arrow sticking
         Position sp = new Position(strt);
         if(arrow_at_start) {
-            position base = v[0] - strt;
+            Position base = Position.subtract(v[0],strt);
             double hyp = hypot(base);
             if(hyp == 0.0) {
                 throw new JPicException("cannot draw arrow on object with zero length");
             }
             if(aht.solid && out.supports_filled_polygons()) {
-                base *= aht.height / hyp;
-                Output.draw_arrow(strt, strt - v[0], aht, lt,
-                    get_outline_color ());
-                sp = strt + base * 0.1; // to reserve spline shape
+                base.times(aht.height / hyp);
+                Output.draw_arrow(strt, Position.subtract(strt,v[0]), aht, lt,
+                    get_outline_color());
+                sp = Position.add(strt,Position.times(base,0.1)); // to reserve spline shape
             } else {
-                base *= Math.abs(lt.thickness) / hyp / 72 / 4;
-                sp = strt + base;
-                draw_arrow(sp, sp - v[0], aht, lt,
-                    graphic_object::get_outline_color ());
+                base.times(Math.abs(lt.thickness) / hyp / 72 / 4);
+                sp = Position.add(strt,base);
+                out.draw_arrow(sp, Position.subtract(sp,v[0]), aht, lt,
+                    get_outline_color());
             }
         }
         if(arrow_at_end) {
-            position base = v[n - 1] - (n > 1 ? v[n - 2] : strt);
+            Position base = Position.subtract(v[n - 1],(n > 1 ? v[n - 2] : strt));
             double hyp = hypot(base);
             if(hyp == 0.0) {
-                error("cannot draw arrow on object with zero length");
-                return;
+                throw new JPicException("cannot draw arrow on object with zero length");
             }
             if(aht.solid && out.supports_filled_polygons()) {
-                base *= aht.height / hyp;
-                draw_arrow(en, v[n - 1] - (n > 1 ? v[n - 2] : strt), aht, lt,
-                    graphic_object::get_outline_color ());
-                v[n - 1] = en - base * 0.1; // to reserve spline shape
+                base.times(aht.height / hyp);
+                out.draw_arrow(en, Position.subtract(v[n - 1],(n > 1 ? v[n - 2] : strt)), aht, lt,
+                    get_outline_color());
+                v[n - 1] = Position.subtract(en,Position.times(base,0.1)); // to reserve spline shape
             } else {
-                base *= Math.abs(lt.thickness) / hyp / 72 / 4;
-                v[n - 1] = en - base;
-                draw_arrow(v[n - 1], v[n - 1] - (n > 1 ? v[n - 2] : strt), aht, lt,
-                    graphic_object::get_outline_color ());
+                base.times(Math.abs(lt.thickness) / hyp / 72 / 4);
+                v[n - 1] = Position.subtract(en,base);
+                out.draw_arrow(v[n - 1], Position.subtract(v[n - 1],(n > 1 ? v[n - 2] : strt)), aht, lt,
+                    get_outline_color());
             }
         }
         out.spline(sp, v, n, lt);
         out.reset_color();
     }
 
-    void update_bounding_box(BoundingBox p)
+    public void update_bounding_box(BoundingBox p)
     {
         p.encompass(strt);
         p.encompass(en);
@@ -96,7 +95,8 @@ public class SplineShape extends LineShape
 
   */
         for(int i = 1;i < n;i++)
-            p.encompass((i == 1 ? strt : v[i - 2]) * .125 + v[i - 1] * .75 + v[i] * .125);
+            p.encompass(Position.add(Position.times(i == 1 ? strt : v[i - 2],.125),
+                    Position.add(Position.times(v[i - 1],.75),Position.times(v[i],.125))));
     }
 
 }

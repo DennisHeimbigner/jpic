@@ -239,6 +239,13 @@ public class JPic implements Types
     static public void
     main(String[] argv)
     {
+
+
+
+	// If this was invoked using java -jar, then
+        // The -D flags don't work, so we need to properly
+        	
+
         // Get the -D flags from command line
         boolean quiet = (System.getProperty("quiet") != null);
 
